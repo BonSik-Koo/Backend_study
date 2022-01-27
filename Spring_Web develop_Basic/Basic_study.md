@@ -20,7 +20,7 @@ __정적 컨텐츠__
 __MVC와 템플릿 엔진__
 -------------------------
 __MVC란?__
-- 애플리케이션을 Mode, Controller, view의 역할로 나누어 개발하는 방식    
+- 애플리케이션을 Mode, Controller, view의 역할로 나누어 개발하는 방식  
 < Model >    
 - 데이터 관련 로직 담당   
 - controller와 소통   
@@ -63,8 +63,8 @@ public class HelloController {
 - 스프링 부트에서 HTTP GET요청을 처리하는 메서드를 맵핑하는 어노테이션이다.   
 - 즉 GET요청을 하는 API의 어노테이션이고 데이터를 가져올 때 사용한다.      
   
-④ 스프링내 "뷰 리졸버"가 "hello".Html로 바꾸게 되고 해당하는 Html의 View을 찾아주고 템플릿 엔진을 연결시켜준다.
-⑤ 템플릿 엔진이 해당 Html을 변형시켜 웹 브라우저로 전송시킨다.
+④ 스프링내 "뷰 리졸버"가 "hello".Html로 바꾸게 되고 해당하는 Html의 View을 찾아주고 템플릿 엔진을 연결시켜준다.      
+⑤ 템플릿 엔진이 해당 Html을 변형시켜 웹 브라우저로 전송시킨다.   
 ```
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">  <!--템플릿 엔진인(thymeleaf)가 html을 요구에 맞게 바꿔주는 것이다.-->
