@@ -28,7 +28,7 @@ spring.jpa.hibernate.ddl-auto=none  -> 엔티티로 설정한 객체를 보고 �
 
 __Entity(엔티티)란?__
 ------------------------------
--JPA에서 엔티티는 테이블에 대응하는 하나의 클래스를 만드는 것이다.
+-JPA에서 엔티티는 테이블에 대응하는 하나의 클래스를 만드는 것이다.          
 ex)   
 ![333](https://user-images.githubusercontent.com/96917871/152138146-1540185f-7ce1-4aeb-a01d-646c25033cf7.PNG)
 
