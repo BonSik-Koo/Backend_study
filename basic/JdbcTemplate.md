@@ -4,11 +4,20 @@ __JdbcTemplate이란?__
 
 __Jdbc Template생성__
 --------------------------
-- Jdbc Template객체를 생성하려면 DataSource의 생성자가 전달되어야 된다.
+- Jdbc Template객체를 생성하려면 DataSource의 생성자가 전달되어야 된다.    
 __DataSource란__
 - DB와 관계된 커넥션 정보를 담고 있으며 스프링이 시작되면 빈으로 등록된다. 
 - "property file"을 통해 DateSource를 정의해준다. ->스프링이 시작될때 자동으로 스프링 컨테이너에 빈으로 등록.
-![111](https://user-images.githubusercontent.com/96917871/151832304-03ca178f-8737-4166-a693-c6e9a5b471ab.PNG)
+![111](https://user-images.githubusercontent.com/96917871/151832304-03ca178f-8737-4166-a693-c6e9a5b471ab.PNG)      
+
+__query() 메소드__
+-----------------------
+__RowMapper란__
+
+- 검색하는 쿼리문("SELECT ~")에서 원하는 객체의 타입으로 반환받기 위한 인터페이스이다
+
+
+
 
 
 
