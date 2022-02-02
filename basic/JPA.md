@@ -73,7 +73,7 @@ public class Member { //회원들의 정보
 - DB의 열의 이름과 entity객체의 열의 변수의 이름이 같은 경우 "@Column" 어노테이션을 생략할수 있다. 하지만 이름이 다르다면 entity객체의 변수에 '@Column(name="열의이름")'을 어노테이션으로 정의해두어야 한다.
 
 __JPA 쿼리문 예시__
-------------------------------------
+========================================
 ```
 public class JpaMemberRepository implements MemberRepository{
 
