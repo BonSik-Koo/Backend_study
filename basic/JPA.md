@@ -34,10 +34,41 @@ ex)
 
 __"@Id", "@Column" 설정하기__
 ------------------------------------
+```
+
+import javax.persistence.*;
+@Entity //JPA과 관리하는 entity
+public class Member { //회원들의 정보
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    //@Column(name="name")
+    private String name;
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id=id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name){
+        this.name= name;
+    }
+
+}
+```
 1) "@Id"   
+- DB에서의 Primary Key를 의미한다.
+- "@GeneratedValue(strategy = GenerationType.IDENTITY)" : PK인 id의 값을 생성하는 방식을 "IDENTITY"방식으로 설정      
+※ DB에서 값이 들어올때마다 자동으로 값을 증가시켜 생성하는 방식 -> "IDENTITY"방식이라고 한다.   
 
 2) "@Column"   
-
+- DB의 column의 해당하는 열을 대입하는 것
+- DB의 열의 이름과 entity객체의 열의 변수의 이름이 같은 경우 "@Column" 어노테이션을 생략할수 있다. 하지만 이름이 다르다면 entity객체의 변수에 '@Column(name="열의이름")'을 어노테이션으로 정의해두어야 한다.
 
 
 
