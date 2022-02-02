@@ -22,6 +22,7 @@ __JPA 사용방법__
 spring.jpa.show-sql=true ->만들어진 쿼리문을 볼수 있다.
 spring.jpa.hibernate.ddl-auto=none  -> 엔티티로 설정한 객체를 보고 자동으로 "테이블"까지 생성하는 옵션 --> create로 바꾸면 만들어준다.
 ```
+==> 위의 설정을 마치면 스프링을 시작하면 스프링 부트에서 자동으로 "EntityManager"를 생성한다. ->DB와 다 연결시켜서
 
 ② Entity 매핑하기!!
 - 어노에티션을 사용하여 설정할 객체를 "Entity"로 설정하기        
