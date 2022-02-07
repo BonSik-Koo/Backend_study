@@ -28,7 +28,12 @@ public class TimeTraceAop {
 }
 ```
 - "@Aspect" : "AOP"사용하기 위해 추가하는 어노테이션
-- "@Around" : 타켓으로하는 메소드를 감싸서 특정 advice를 실행한다는 의미 -> 
+- "@Around" : 타켓으로하는 메소드를 감싸서 특정 advice를 실행한다는 의미 -> advice의 한종류로 실패여부와 상관없이 전 후 실행되도록하는 advice 이다.
+  ※참고※      
+![2221](https://user-images.githubusercontent.com/96917871/152764577-d0e2bc7d-5241-4dee-8eb3-73bee433a4b4.PNG)    
+![33321](https://user-images.githubusercontent.com/96917871/152764743-c0e71bd5-9dd6-4610-9a9c-d67152e287f6.PNG)
 
+
+  
 advice정리, aop나머지 정리
 
