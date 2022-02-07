@@ -1,6 +1,7 @@
 __Spring AOP란__
 ===================
 - 어떤 로직을 기준으로 공통 관심 사항(핵심 비지니스 로직에 추가적인 기능 -> 메소드 시간 측정등), 핵심 관심 사항(핵심 비지니스 로직)을 나누어 모듈화 시키는 것 -> 재사용 가능
+
 ![33333_LI](https://user-images.githubusercontent.com/96917871/152482171-43ff9207-8d81-4133-a776-64b16b0a474f.jpg)
 ![4444](https://user-images.githubusercontent.com/96917871/152482228-9eb665fe-4506-4333-9aaf-319a313ba643.PNG)
 
