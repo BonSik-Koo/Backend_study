@@ -93,10 +93,10 @@ __싱글톤 컨테이너__
 - 스프링 컨테이너는 싱글턴 패턴을 적용하지 않아도, 객체 인스턴스를 싱글톤으로 관리한다. -> 처음 자바의 코드를 보면 "memberservice", "orderservice"메소드를 호출할 때 모두 "memberRepository"를
 호출하여 각각 생성하는것 처럼보이지만 하나의 "memberRepository"를 주입한다 --> "@Configuration" 어노테이션 때문! 아래에서 더 자세히 설명
 
-<싱글톤 컨테이너 적용 전>
+<싱글톤 컨테이너 적용 전>    
 ![2222](https://user-images.githubusercontent.com/96917871/153240158-0cdcea42-aedf-4dfd-915d-edaed9054ebd.PNG)
 
-<싱글톤 컨테이너 적용 후>
+<싱글톤 컨테이너 적용 후>      
 ![1](https://user-images.githubusercontent.com/96917871/153239994-ea3d832e-bcc7-49ae-b68e-332a37ab7b6b.PNG)
 
 __싱글톤 방식의 주의점__
