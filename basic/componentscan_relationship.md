@@ -19,8 +19,13 @@ public class MemoryMemberRepository implements MemberRepository {}
 ```
 - @ComponentScan 은 @Component 가 붙은 모든 클래스를 스프링 빈으로 등록한다
 - 기존과 다르게 "@bean"으로 등록한 클래스 하나도 없어진다.
-- 그리고 기존에 "@Configuration"으로 지정한 "appconfig"가 스프링 빈에 등록된 이유도 "@Configuration" 소스 내에 "@Component" 어노테이션이 붙어 있었기 때문이다.        
+- 그리고 기존에 "@Configuration"으로 지정한 "appconfig"가 스프링 빈에 등록된 이유도 "@Configuration" 소스 내에 "@Component" 어노테이션이 붙어 있었기 때문이다.              
 
+![11](https://user-images.githubusercontent.com/96917871/153417106-d9f3cb16-76cb-461e-b03e9baccd080774.PNG)
+
+
+
+-----------------------------
 ```
 @Component
 public class MemberServiceImpl implements MemberService {
