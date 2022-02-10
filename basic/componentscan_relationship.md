@@ -22,8 +22,8 @@ public class MemoryMemberRepository implements MemberRepository {}
 - 그리고 기존에 "@Configuration"으로 지정한 "appconfig"가 스프링 빈에 등록된 이유도 "@Configuration" 소스 내에 "@Component" 어노테이션이 붙어 있었기 때문이다.              
 
 ![11](https://user-images.githubusercontent.com/96917871/153417259-e3cb1a91-4b5a-4b27-9cba-bd5f50017994.PNG)
-
 -------------------------------
+
 ```
 @Component
 public class MemberServiceImpl implements MemberService {
@@ -34,4 +34,45 @@ public class MemberServiceImpl implements MemberService {
  }
 ```
 - "@Bean"을 사용할때에는 설정정보와 의존관계도 직접 표시하였다. 하지만 컨포넌트 스캔을 사용할때에는 "@Autowired" 어노테이션을 사용하여 의존관계를 자동으로 주입해준다.
+- 여러개의 의존관계도 주입받을수 있다.
+- 스프링 컨테이너가 자동으로 해당 스프링 빈을 찾아서 주입한다 ->이때 기본 조회 전략은 타입이 같은 빈을 찾아서 주입한다 (ex. MemberService와 MemberServiceImpl은 같은 타입이다 MemberService가 더 상위 타입이다)
+
+![2222222222](https://user-images.githubusercontent.com/96917871/153417948-ea1585db-2487-4bf8-aaa7-0c4628e5bcd6.PNG)    
+
+__※참고__    
+```
+@SpringBootApplication //스프링 부트어플리케이션 어노테이션 
+						// -> 실행하게 되면여기에서 @componentscan이 있기 때문에 우리가 따로 Componentscan하지 않아도 component로 선언되있는 것을 빈으로 등록한다.!!!
+                       // 자동빈, 수동빈와 관련하여 같은 이름의 빈이 있으면 오류를 발생시킨다 -> 스프링 부트의 기능
+public class CoreApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(CoreApplication.class, args);
+	}
+
+}
+```
+ 
+
+__탐색 위치와 기본 스캔 대상__
+-------------------------------------------
+```
+@Configuration
+@ComponentScan ( //@ComponentScan 은 @Component 가 붙은 모든 클래스를 스프링 빈으로 등록한다
+        basePackages = "hello.example.core.member",  //"@Component"로 붙은 걸 찾을 파일을 선택할수 있다. 해당 경로의 하위 파일을 모두 찾게 된다.
+
+        /*
+        만약 지정하지 않으면 @ComponentScan 이 붙은 설정 정보 클래스의 패키지가 시작 위치가 된다 -> AutoAppConfig의 패키지인 "hello.example.core"부터 시작
+
+        <권장방법>
+        예를 들어서 프로젝트가 다음과 같이 구조가 되어 있으면
+        com.hello
+        com.hello.serivce
+        com.hello.repository
+
+        com.hello 프로젝트 시작 루트, 여기에 AppConfig 같은 메인 설정 정보를 두고,
+        @ComponentScan 애노테이션을 붙이고, basePackages 지정은 생략한다
+        */
+```
+
 
