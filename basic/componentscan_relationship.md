@@ -23,9 +23,6 @@ public class MemoryMemberRepository implements MemberRepository {}
 
 ![11](https://user-images.githubusercontent.com/96917871/153417106-d9f3cb16-76cb-461e-b03e9baccd080774.PNG)
 
-
-
------------------------------
 ```
 @Component
 public class MemberServiceImpl implements MemberService {
