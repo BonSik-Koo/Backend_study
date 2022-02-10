@@ -22,6 +22,20 @@ public class MemoryMemberRepository implements MemberRepository {}
 - 그리고 기존에 "@Configuration"으로 지정한 "appconfig"가 스프링 빈에 등록된 이유도 "@Configuration" 소스 내에 "@Component" 어노테이션이 붙어 있었기 때문이다.              
 
 ![11](https://user-images.githubusercontent.com/96917871/153417259-e3cb1a91-4b5a-4b27-9cba-bd5f50017994.PNG)
+
+__※참고(스프링 부트)__
+```
+@SpringBootApplication //스프링 부트어플리케이션 어노테이션
+						// -> 실행하게 되면여기에서 @componentscan이 있기 때문에 우리가 따로 Componentscan하지 않아도 component로 선언되있는 것을 빈으로 등록한다.!!!
+                       // 자동빈, 수동빈와 관련하여 같은 이름의 빈이 있으면 오류를 발생시킨다 -> 스프링 부트의 기능
+public class CoreApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(CoreApplication.class, args);
+	}
+
+}
+```
 -------------------------------
 
 ```
@@ -38,21 +52,6 @@ public class MemberServiceImpl implements MemberService {
 - 스프링 컨테이너가 자동으로 해당 스프링 빈을 찾아서 주입한다 ->이때 기본 조회 전략은 타입이 같은 빈을 찾아서 주입한다 (ex. MemberService와 MemberServiceImpl은 같은 타입이다 MemberService가 더 상위 타입이다)
 
 ![2222222222](https://user-images.githubusercontent.com/96917871/153417948-ea1585db-2487-4bf8-aaa7-0c4628e5bcd6.PNG)    
-
-__※참고__    
-```
-@SpringBootApplication //스프링 부트어플리케이션 어노테이션 
-						// -> 실행하게 되면여기에서 @componentscan이 있기 때문에 우리가 따로 Componentscan하지 않아도 component로 선언되있는 것을 빈으로 등록한다.!!!
-                       // 자동빈, 수동빈와 관련하여 같은 이름의 빈이 있으면 오류를 발생시킨다 -> 스프링 부트의 기능
-public class CoreApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(CoreApplication.class, args);
-	}
-
-}
-```
- 
 
 __탐색 위치와 기본 스캔 대상__
 -------------------------------------------
@@ -75,4 +74,12 @@ __탐색 위치와 기본 스캔 대상__
         */
 ```
 
+__중복 등록과 충돌__
+-----------------------------
+__1. 자동 빈 등록 vs 자동 빈 등록__
+- 이름이 같은 빈이 자동 등록될 시 "ConflictingBeanDefinitionException" 예외 발생
+- 스프링 부트 어플리케이션을 실행시킬시 수동이든 자동빈 등록이든 같은 이름의 빈이 있으면 오류를 발생시킨다. -> 스프링부트 기능
 
+__2. 수동 빈 등록 vs 자동 빈 등록__
+- 위와 다르게 오류는 발생하지 않고 수동빈등록이 우선권을 가진다 -> 수동빈이 자동빈을 오버라이딩 하여 재정의 한다.
+- 마찬가지로 스프링 부트는 이와 같은 이름이 있으면 오류를 발생시켜준다.
