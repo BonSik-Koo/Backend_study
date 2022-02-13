@@ -80,30 +80,26 @@ __자바 표준라이브러리의중 "Provider" 사용 방식__
 ```
 static class ClientBean {
 
-//        <스프링 컨테이너를 통해서 직접 빈을 가져오는 방식>
-//        @Autowired
-//        private ApplicationContext ac; //항상 새로운 프로토타입을 가져와야 하는경우니 스프링 컨테이너객체를 가져와 필요할때 마다 스프링 컨테이너에 요청한다.
-
-
-//        <스프링의 기능중 "ObjectProvider"기능사용 방식>
-//        @Autowired
-//        private ObjectProvider<PrototypeBean> prototypeBeansProvider ;
-
           @Autowired
           private Provider<PrototypeBean> provider;
 
         public int logic() {
-//          <스프링 컨테이너를 통해서 직접 빈을 가져오는 방식>
-//          prototypeBean prototypeBean = ac.getBean(PrototypeBean.class);
-
-//          <스프링의 기능중 "ObjectProvider"기능사용 방식>
-//          PrototypeBean prototypeBean = prototypeBeansProvider.getObject();
-
             PrototypeBean prototypeBean = provider.get();
-
             prototypeBean.addConut();
             return prototypeBean.getCount();
         }
     }
+```
+- 'javax.inject:javax.inject:1' 라이브러리를 gradle에 추가해야 한다.
+- provider 의 get() 을 호출하면 내부에서는 스프링 컨테이너를 통해 해당 빈을 찾아서 반환한다. (DL)
+- Provider 는 지금 딱 필요한 DL 정도의 기능만 제공한다.
+- 자바 표준이므로 스프링이 아닌 다른 컨테이너에서도 사용할 수 있다.
+
+__정리__
+-----------------
+- 프로토타입 빈을 언제 사용할까? 매번 사용할 때 마다 의존관계 주입이 완료된 새로운 객체가 필요하면 사용하면 된다. 그런데 실무에서 웹 애플리케이션을 개발해보면, 싱글톤 빈으로 대부분의 문제를 해결할 수 있기 때문에 프로토타입 빈을 직접적으로 사용하는 일은 매우 드물다
+- "ObjectProvider", "JSR330 Provider"등은 프로토타입을 사용할때 뿐만 아니라 "DL"을 사용해야 할때도 많이 사용된다.
+- 스프링 컨테이너 환경에서 사용한다면 "ObjectProvider"를 다른 컨테이너에서 사용된다면 "JSR330 Provider"를 경우에 맞추어 사용하면 된다.
+
 
 
