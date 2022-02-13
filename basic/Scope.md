@@ -3,6 +3,9 @@
 
 
 __싱글톤내에서 프로토타입 빈을 사용할때__
+=============================================
+__스프링 컨테이너에서 직접 빈을 가져오는 방식__
+---------------------------------------------------------
 ```
 static class ClientBean {
         @Autowired
@@ -52,4 +55,55 @@ static class ClientBean {
 - 이렇게 스프링의 애플리케이션 컨테스트 전체를 주입받게 되면, 스프링 컨테이너에 종속적인 코드가 되고, 단위 테스트도 어려워진다.
 - 지금 필요한 기능은 지정된 프로토타입 빈을 컨테이너에서 대신 찾아주는 "DL(dependency Lookup)"정도의 기능만 필요하다.
 - 의존관계를 외부에서 주입(DI) 받는게 아니라 이렇게 직접 필요한 의존관계를 찾는 것을 "Dependency Lookup (DL) 의존관계 조회(탐색)" 이라한다
+
+__스프링의 기능중 "ObjectProvider"사용 방식__
+-----------------------------------------------
+```
+static class ClientBean {
+        @Autowired
+        private ObjectProvider<PrototypeBean> prototypeBeansProvider ;
+
+        public int logic() {
+            PrototypeBean prototypeBean = prototypeBeansProvider.getObject();
+            prototypeBean.addConut();
+            return prototypeBean.getCount();
+        }
+}
+```
+- "ObjectProvider"의 "getObject()" 를 호출하면 내부에서는 스프링 컨테이너를 통해 해당 빈을 찾아서 반환해준다 -> "DL" 
+- ObjectProvider 는 지금 딱 필요한 DL 정도의 기능만 제공한다.
+- 스프링 컨테이너 객체를 직접 가져오는 방식보다 훨씬 좋은 방식이다.
+- 하지만 스프링 컨테이너에서만 사용할수 있는 기능이다. -> 다른 컨테이너 프레임워크에는 해당 기능이 없다 -> 그렇땐 아래 "자바 표준"을 사용한다.
+
+__자바 표준라이브러리의중 "Provider" 사용 방식__
+--------------------------------------------------
+```
+static class ClientBean {
+
+//        <스프링 컨테이너를 통해서 직접 빈을 가져오는 방식>
+//        @Autowired
+//        private ApplicationContext ac; //항상 새로운 프로토타입을 가져와야 하는경우니 스프링 컨테이너객체를 가져와 필요할때 마다 스프링 컨테이너에 요청한다.
+
+
+//        <스프링의 기능중 "ObjectProvider"기능사용 방식>
+//        @Autowired
+//        private ObjectProvider<PrototypeBean> prototypeBeansProvider ;
+
+          @Autowired
+          private Provider<PrototypeBean> provider;
+
+        public int logic() {
+//          <스프링 컨테이너를 통해서 직접 빈을 가져오는 방식>
+//          prototypeBean prototypeBean = ac.getBean(PrototypeBean.class);
+
+//          <스프링의 기능중 "ObjectProvider"기능사용 방식>
+//          PrototypeBean prototypeBean = prototypeBeansProvider.getObject();
+
+            PrototypeBean prototypeBean = provider.get();
+
+            prototypeBean.addConut();
+            return prototypeBean.getCount();
+        }
+    }
+
 
