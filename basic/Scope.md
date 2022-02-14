@@ -1,6 +1,95 @@
-__Scope란?__
+__빈 Scope란?__
 ======================
+- 빈이 존재할수 있는 범위를 뜻한다.
+- 빈의 메타정보(beanDefinition)중에 있는 하나이다.
+- 기본적으로 빈을 등록하게 되면 스코프는 defalut이다 -> 즉 "싱글톤(singleton)"이다.
 
+- 싱글톤: 기본 스코프, 스프링 컨테이너의 시작과 종료까지 유지되는 가장 넓은 범위의 스코프이다
+- 프로토타입: 스프링 컨테이너는 프로토타입 빈의 생성과 의존관계 주입까지만 관여하고 더는 관리하지 않는 매우 짧은 범위의 스코프이다
+- 웹 관련 스코프: request, session, application
+
+__"singleton"(싱글톤 스코프)__
+--------------------------------
+![55](https://user-images.githubusercontent.com/96917871/153867935-aee55274-ed4f-4b30-a699-d1220ba0ba9c.PNG)
+```
+public class SingleTonTest {
+    @Test
+    public void singletonBeanFind() {
+        /*
+        <참고>
+        : "AnnotationConfigApplicationContext"의 parameter가 애초에 component클래스를 받는것이다 그래서 해당 클래스를 "Component"로 등록하지 않아도 자동으로 스프링 빈에 등록된다
+           -> ComponentScan이 있어야지 Component로 등록된 것들을 스프링 빈에 등록하지만 "AnnotationConfigAp~"로 스프링 컨테이너가 만들어지면서 ComponentScan이 실행되어  Component로 등록된 객체들이 자동으로 빈으로 등록된다.
+         */
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(SingletonBean.class);
+
+        SingletonBean singletonBean1 = ac.getBean(SingletonBean.class);
+        SingletonBean singletonBean2 = ac.getBean(SingletonBean.class);
+
+        System.out.println("singletonBean1 = " + singletonBean1);
+        System.out.println("singletonBean2 =" + singletonBean2);
+
+        Assertions.assertThat(singletonBean1).isSameAs(singletonBean2);
+
+        ac.close();
+    }
+
+    @Scope("singleton") //-> bean으로 등록될때 속성값 -> 기본(defalut)는 "singleton"이다.!!!!
+    //@Component
+    static class SingletonBean {
+        
+        @PostConstruct
+        public void init() {
+            System.out.println("SingletonBean.init");
+        }
+        
+        @PreDestroy
+        public void destroy() {
+            System.out.println("SingletonBean.destroy");
+        }
+    }
+}
+```
+
+__"prototype"(프로토타입 스코프)__
+--------------------------------------               
+![123123](https://user-images.githubusercontent.com/96917871/153868274-5078a61b-a737-466f-b444-bda5d579f419.PNG)                  
+![321321](https://user-images.githubusercontent.com/96917871/153868439-e2efd344-e62f-450e-bb16-88d72d4b5529.PNG)
+- 스프링 컨테이너는 프로토타입 빈의 요청이 있을시 생성하고, 의존관계주입, 초기화까지만 처리한 후 클라이언트에 빈을 반환하고 그 후 스프링 컨테이너는 해당 프로토타입 빈을 관리하지 않는다.!!
+- 스프링 컨테이너가 관리하지 않으니 스프링 컨테이너가 종료되기전 빈을 반환하는 과정에서 프로토타입의 빈은 컨테이너에게 없기 때문에 프로토타입의 빈의 "@PreDestroy"같은 종료 메서드는 호출되지 않는다.
+```
+public class PrototypeTest {
+
+    @Test
+    public void prototypeBeanFind() {
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(ProtoTypeBean.class);
+        ProtoTypeBean protoTypeBean1 = ac.getBean(ProtoTypeBean.class);
+        ProtoTypeBean protoTypeBean2 = ac.getBean(ProtoTypeBean.class);
+
+        System.out.println("protoTypeBean1 = " + protoTypeBean1);
+        System.out.println("protoTypeBean2 = " + protoTypeBean2);
+
+        Assertions.assertThat(protoTypeBean1).isNotSameAs(protoTypeBean2);
+
+        ac.close();
+    }
+
+    //프로토타입을 사용하는경우는 대부분 요청할때마다 새로운 객체를 생성해서 사용해야 할때!!!!
+    @Scope("prototype") //->스프링 컨테이너에 해당 빈을 요청 했을때만 객체를 생성하고 의존관계 주입을 마친후 스프링 컨테이너에서 관리 하지 않는다!!!!! 후에 관리 하지 않는것이 핵심
+    //@Component
+    public static class ProtoTypeBean {
+
+        @PostConstruct
+        public void init() {
+            System.out.println("PrototypeBean.init");
+        }
+
+        @PreDestroy //-> prototype에서 요청시 생성만 하고 반환후 스프링 컨테이너에서 관리하지 않으니 스프링 컨테이너 종료전 자동으로 빈을 반납하지도 않고 해당 메소드도 호출하지 않는다.
+        public void destroy() {
+            System.out.println("PrototypeBena.destroy");
+        }
+    }
+}
+```
 
 
 __프로토타입 스코프 -> 싱글톤내에서 프로토타입 빈을 사용할때__
