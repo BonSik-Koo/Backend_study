@@ -126,9 +126,131 @@ __request 스코프__
 - 즉 스프링 컨테이너가 생성될때 요청하여 등록할수 있는 빈이 아니라 스프링 컨테이너가 생성되 후 http 요청이 있을시 생성할수 있는 빈이다.      
 - __HTTP요청이 있을시 생성할수 있는 빈이기 때문에 해당 "request 스코프 빈"을 가지고 있는 controller가 있다면 처음 스프링 컨테이너가 생성되면서 controller가 빈으로 등록되고 의존관계로 가지고 있는 "request 스코프 빈"을 자동 의존관계주입시 시 오류가 발생한다!!!     
 -> 이 빈은 고객요청(HTTP요청)이 있을시에 생성할수 있는 빈이다!!!     
---> 그러므로 "Provider" 또는 프록시를 통해 이를 해결할수 있다!!__       
+--> 그러므로 "Provider" 또는 "프록시(Proxy)" 를 통해 이를 해결할수 있다!!__       
 
-__<스코프와 Provider>__
- 
+__스코프와 Provider , 스코프와 프록시__
+---------------------------------------------
+```
+//로그를 출력하기 위한 클래스
+@Component
+/*
+@Scope(value = "request") 를 사용해서 request 스코프로 지정했다. 이제 이 빈은 HTTP 요청 당 하나씩 생성되고, HTTP 요청이 끝나는 시점에 소멸된다
+ -> 즉 스프링 컨테이너가 생성될때 요청하여 등록할수 있는 빈이 아니라 스프링 컨테이너가 생성되 후 http 요청이 있을시 생성할수 있는 빈이다!!!!!!!!!!!!!!!
+ + 생성되는 시점이 예를 들어 컨트롤러에서 http를 요청받는 메소드에서 해당 클래스를 사용하려고 불렀는경우에 생성된다 -> "myLogger.setRequestURL(requestURL);"여기서 myLogger의 메소드를 호춣하는순간 생성되어 빈으로 등록됨
+ */
+//@Scope("request") // = @Scope(value = "request") -> "ObjectProvider" 사용
+@Scope(value="request" , proxyMode = ScopedProxyMode.TARGET_CLASS) // -> "Proxy" 사용
+public class MyLogger {
 
+    private String uuid;
+    private String requestURL;
+
+    public void setRequestURL(String requestURL) {
+        this.requestURL = requestURL;
+    }
+
+    public void log(String message) {
+        System.out.println("[" + uuid + "]" + "[" + requestURL + "] " + message);
+    }
+
+    @PostConstruct
+    public void init() {
+        uuid = UUID.randomUUID().toString();
+        System.out.println("[" + uuid + "] request scope bean create " + this);
+    }
+
+    @PreDestroy
+    public void close() {
+        System.out.println("[" + uuid + "] request scope bean close " + this );
+    }
+}
+```
+
+```
+@Controller
+public class LogDemoController {
+
+    private final LogDemoService logDemoService;
+    //private final ObjectProvider<MyLogger> myLoggerProvider; // ->"ObjectProvider" 사용 / 스프링 컨테이너가 올라올때 "ObjectProvider<T>"는 자동으로 생성해서 빈으로 등록해준다!!
+    private final MyLogger myLogger;  // -> "Proxy" 사용
+
+
+//    @Autowired // ->"ObjectProvider" 사용
+//    public LogDemoController(LogDemoService logDemoService, ObjectProvider<MyLogger> myLogger) {
+//        this.logDemoService = logDemoService;
+//        this.myLoggerProvider = myLogger;
+//    }
+
+    @Autowired  // -> "Proxy" 사용
+    public LogDemoController(LogDemoService logDemoService, MyLogger myLogger) {
+        this.logDemoService = logDemoService;
+        this.myLogger = myLogger;
+    }
+
+    @RequestMapping("log-demo")  // =? @GetMapping("log-demo")
+    @ResponseBody
+    public String logDemo(HttpServletRequest request) {
+
+        String requestURL = request.getRequestURI().toString();
+
+       // MyLogger myLogger = myLoggerProvider.getObject(); // ->"ObjectProvider" 사용
+        myLogger.setRequestURL(requestURL);
+        myLogger.log("controller test");
+        logDemoService.logic("testId");
+        /*
+        Sevice"안에서 "getObject"해서 컨테이너에 요청해서 새로운 빈을 만들어서 주는게 아니라 해당 빈이 "request"이니깐 http요청있을때 "getObject"하면 각각의 전용빈!!을 생성해서 반환해주고
+        http가 종료 즉 해당 메소드가 종료될때까지 같은 메소드내에서 즉 같은 손님이면 "MyLogger" 타입의 빈을 getObject하면 전용으로 만들었던 빈을 반환해주게 된다!!!
+        http요청 후 반환되면 (해당 메소드 종료되면) 전용빈도 사라지게 된다.
+        */
+
+        return "OK";
+    }
+}
+```
+
+```
+@Service
+public class LogDemoService {
+
+    //private final ObjectProvider<MyLogger> myLoggerProvider;
+    private final MyLogger myLogger;
+
+//    @Autowired  //-> "ObjectProvider" 사용
+//    public LogDemoService(ObjectProvider<MyLogger> myLogger) {
+//        this.myLoggerProvider = myLogger;
+//    }
+
+    @Autowired  // -> "Proxy" 사용
+    public LogDemoService(MyLogger myLogger) {
+        this.myLogger = myLogger;
+    }
+
+    public void logic(String id) {
+       // MyLogger myLogger = myLoggerProvider.getObject(); //-> "ObjectProvider" 사용
+        myLogger.log("service id = " + id);
+    }
+```
+__<스코프와 Provider>__   
+- ObjectProvider 덕분에 ObjectProvider.getObject() 를 호출하는 시점까지 request scope 빈의 생성을 지연할 수 있다.
+- ObjectProvider.getObject() 를 호출하시는 시점에는 HTTP 요청이 진행중이므로 request scope 빈의 생성이 정상 처리된다
+- ObjectProvider를 사용하지 않고 기존의 클래스 이름을(MyLogger)를 사용하려면 "프록시" 방법을 사용하면 된다.
+
+__<스코프와 프록시>__   
+- proxyMode = ScopedProxyMode.TARGET_CLASS 를 추가해주자. 적용 대상이 인터페이스가 아닌 클래스면 TARGET_CLASS 를 선택 , 적용 대상이 인터페이스면 INTERFACES 를 선택
+- 이렇게 하면 MyLogger의 가짜 프록시 클래스를 만들어두고 HTTP request와 상관 없이 가짜 프록시 클래스를 다른 빈에 미리 주입해 둘 수 있다
+- "CGLIB" 라는 라이브러리로 내 클래스를 상속 받은 가짜 프록시 객체를 만들어서 주입한다.
+- @Scope 의 proxyMode = ScopedProxyMode.TARGET_CLASS) 를 설정하면 스프링 컨테이너는 CGLIB라는 바이트코드를 조작하는 라이브러리를 사용해서, MyLogger를 상속받은 가짜 프록시 객체를
+생성한다.
+- 스프링 컨테이너에 등록된 MyLogger타입의 빈을 조회해보면 한 순수한 MyLogger 클래스가 아니라 "MyLogger$$EnhancerBySpringCGLIB" 이라는 클래스로 만들어진 객체가 대신 등록된 것을 확인할 수 있다.
+- 스프링 컨테이너가 생성되면서 "Controller"에 있는 "MyLogger"의 의존관계 주입에 가짜 객체인 프록시 객체가 주입되는것이다!
+![image](https://user-images.githubusercontent.com/96917871/153865823-8996eba8-5cab-467a-b878-9e6003acf033.png)
+
+- 클라이언트가 myLogger.logic() 을 호출하면 사실은 가짜 프록시 객체의 메서드를 호출한 것이다.
+- 가짜 프록시 객체는 request 스코프의 진짜 myLogger.logic() 를 호출한다.
+
+__정리__
+-------------------
+- 사실 Provider를 사용하든, 프록시를 사용하든 핵심 아이디어는 진짜 객체 조회를 꼭 필요한 시점까지 지연처리 한다는 점이다. -> "가장 중요한 점!!"
+- 단지 애노테이션 설정 변경만으로 원본 객체를 프록시 객체로 대체할 수 있다. 이것이 바로 다형성과 DI 컨테이너가 가진 큰 강점이다.!!
+- 꼭 웹 스코프가 아니어도 프록시는 사용할 수 있다.
 
