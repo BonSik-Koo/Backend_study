@@ -68,6 +68,6 @@ __<리터럴>__
 __<속성(Attribute)>__
 =======================
 - "th:*" 속성을 지정하면 타임리프는 기존 속성을 th:* 로 지정한 속성으로 대체한다.(기존에 정의된 속성을 없애고 타임리프로 지정한 속성이 채택). 기존 속성이 없다면 새로 만든다.    
-- ex) "<input type="text" name="mock" th:name="userA"/>" -> 타임리프를 통해서 뷰템플릿이 랜더링 된 후 -> "<input type="text" name="userA"/>"
+- ex) input type="text" name="mock" th:name="userA" -> 타임리프를 통해서 뷰템플릿이 랜더링 된 후 -> input type="text" name="userA"
 
 
