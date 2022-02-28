@@ -73,6 +73,9 @@ __<속성(Attribute)>__
 __<반복>__
 =============
 - 타임리프에서 "th:each"를 사용하여 Model에서 객체를 하나씩 꺼내며 반복할수 있다.
-- <tr th:each="user : ${users}"> -> 반복시 오른쪽 컬렉션( ${users} )의 값을 하나씩 꺼내서 왼쪽 변수( user )에 담아준다 
+- tr th:each="user : ${users}" -> 반복시 오른쪽 컬렉션( ${users} )의 값을 하나씩 꺼내서 왼쪽 변수(user)에 담아준다.(users는 Model에 담긴변수)
+- list뿐만 아니라 Iterator, Enumeration, Map도 사용가능
+- tr th:each="user, userStat : ${users}" -> 반복의 두번째 파라미터를 설정해서 반복의 상태를 확인 할 수 있습니다 --> 두번째 변수는 생략해도 타임리프가 자동으로 담아주는데 생략하면 지정한 변수명(user) + Stat로 된다.
+- 반복의 상태(index : 0부터 시작하는 값 / count : 1부터 시작하는 값 / size : 전체 사이즈 / even , odd : 홀수, 짝수 여부( boolean ) / first , last :처음, 마지막 여부( boolean ) / current : 현재 객체
 
 
