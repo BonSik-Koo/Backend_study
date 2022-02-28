@@ -53,7 +53,7 @@ __(3) 경로변수(PathVarialbe)__
 - @{/hello/{param1}/{param2}(param1=${param1}, param2=${param2})} -> /hello/data1/data2
 - URL 경로상에 변수가 있으면 () 부분은 경로 변수로 처리된다
 
-__(4) 경로 변수 + 쿼리 파라미터
+__(4) 경로 변수 + 쿼리 파라미터__
 - @{/hello/{param1}(param1=${param1}, param2=${param2})} -> /hello/data1?param2=data2
 - ()에 경로변수의 파라미터가 있으면 경로변수로 처리, 없다면 쿼리 파라미터로 처리됨
 
