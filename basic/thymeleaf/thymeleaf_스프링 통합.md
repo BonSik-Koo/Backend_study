@@ -27,3 +27,8 @@ __[히든필드]__
 - 체크 박스를 체크하면 스프링 MVC가 open 에 값이 있는 것을 확인하고 사용한다. 이때 _open 은 무시한다.
 - 체크 박스를 체크하지 않으면 스프링 MVC가 _open 만 있는 것을 확인하고, open 의 값이 체크되지 않았다고 인식한다. 이 경우 서버에서 Boolean 타입을 찍어보면 결과가 null 이 아니라 false 인 것을 확인할 수 있다.
 
+
+__[타임리프는 "th:field"를 사용해서 자동 히든필드 적용]__     
+- < input type="checkbox" id="open" th:field="${item.open}" disabled > 
+
+
