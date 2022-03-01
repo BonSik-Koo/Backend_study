@@ -5,6 +5,21 @@ __<타임리프와 스프링 통합>__
 
 __<입력 폼 처리>__
 ========================
-- 타임리프가 제공해주는 추가 기능인 입력 폼 기능    
-- < form action="item.html" th:action th:Object="${item}" method="post" > -> "th:Object"로 Model에서 전달받은 객체를 가져온다.
-- < input type="text" th:field="*{itemName}" /> -> 
+- 타임리프가 제공해주는 추가 기능인 입력 폼의 추가 기능    
+- < form action="item.html" th:action th:Object="${item}" method="post" > -> "th:Object"로 Model에서 전달받은 객체를 가져온다.         
+- < input type="text" th:field="*{itemName}" /> -> *{...} : 선택 변수 식이라고 한다. th:object 에서 선택한 객체에 접근한다.(=${item.itemName}) --> th:field :HTML 태그의 id , name , value 속성을 자동으로 생성해준다!!!!!    
+- id, name, value를 하나하나 지정해주는 방식을 사용하지 않아도 된다.
+
+__<폼 컴포넌트 기능(checkbox, radio button, List등을 편리하게 사용하는 기능)>__
+========================================================
+
+__체크 박스-단일__
+------------------------
+- < input type="checkbox" id="open" name="open" class="form-check-input" > -> checkbox 예시
+- 체크 박스기능으로 인해 체크하게 되면 체크 박스를 체크하면 HTML Form에서 open=on 이라는 값이 넘어간다. 스프링은 on 이라는 문자를
+true 타입으로 변환해준다. -> 즉 "true"라는 데이터를 받을수 있다
+- 하지만 HTML에서 체크 박스를 선택하지 않고 폼을 전송하면 open 이라는 필드 자체가 서버로 전송되지 않는다. -> 해당 변수 자체가 전송되지 않는다!
+- 서버쪽으로 값이 전달되지 않으면 상황에 따라 문제가 발생할 수 있다.!!
+
+
+
