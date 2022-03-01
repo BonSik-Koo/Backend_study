@@ -5,5 +5,6 @@ __<타임리프와 스프링 통합>__
 
 __<입력 폼 처리>__
 ========================
-- 타임리프가 제공해주는 추가 기능인 입력 폼 기능
--< form action="item.html" th:action th:Object="${item}" method="post" >
+- 타임리프가 제공해주는 추가 기능인 입력 폼 기능    
+- < form action="item.html" th:action th:Object="${item}" method="post" > -> "th:Object"로 Model에서 전달받은 객체를 가져온다.
+- < input type="text" id="itemName" name="itemName" th:value="*{itemName}"  />
