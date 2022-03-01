@@ -6,4 +6,4 @@ __<타임리프와 스프링 통합>__
 __<입력 폼 처리>__
 ========================
 - 타임리프가 제공해주는 추가 기능인 입력 폼 기능
-<form action="item.html" th:action th:Object="${item}" method="post">
+- __<form action="item.html" th:action th:Object="${item}" method="post">__
