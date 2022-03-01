@@ -29,6 +29,7 @@ __[히든필드]__
 
 
 __[타임리프는 "th:field"를 사용해서 자동 히든필드 적용]__     
-- < input type="checkbox" id="open" th:field="${item.open}" disabled > 
+- < input type="checkbox" id="open" th:field="${item.open}" disabled > -> 히든 필드 자동 적용
+- 앞서 폼 type=text 에서 "th:field"를 사용할때 name, id, value를 자동 생성해주었는데 type=checkbox 일때는 name, id, value, checked, 히든 필드 까지 자동 생성해준다.
 
 
