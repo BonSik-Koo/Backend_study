@@ -31,7 +31,7 @@ __[히든필드]__
 __[타임리프는 "th:field"를 사용해서 자동 히든필드 적용]__     
 - < input type="checkbox" id="open" th:field="${item.open}" disabled > -> 히든 필드 자동 적용
 - 앞서 폼 type=text 에서 "th:field"를 사용할때 name, id, value를 자동 생성해주었는데 type=checkbox 일때는 name, id, value, checked, 히든 필드 까지 자동 생성해준다. ->여기서 id는 "th:field=${item.open}"이라면 "open1"로 된다. -> 반복문(<th:each>)이면 open2,open3...
-- 폼으로 보낼때는 th:field 를 사용해서 체크를 한다면 "name"의 값 true의 value를 만들어서 전송 -> 타임리프가 히든 필드를 만들어 null값은 안보내지게 만든다.
+- 폼으로 보낼때는 th:field 를 사용해서 체크를 한다면 "name"의 값에 true를 넣어 전송 -> 타임리프가 히든 필드를 만들어 null값은 안보내지게 만든다.(false를 보내게)
 - 폼으로 보내는 경우가 아닌 경우에 th:field를 사용해서 "value"의 값이 "name"의 값에 있으면 타임리프가 "checked"를 자동으로 만들어서 체크를 해준다.!!!!!!!!             
 
 
