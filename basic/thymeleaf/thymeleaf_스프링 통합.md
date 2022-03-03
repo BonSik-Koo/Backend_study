@@ -36,6 +36,9 @@ __[타임리프는 "th:field"를 사용해서 자동 히든필드 적용]__
 
 __체크 박스_다중__
 ---------------------------
+-
+-
+-
 
 
 
@@ -60,5 +63,7 @@ __셀렉트(select) 박스__
     <option th:each="deliveryCode : ${deliveryCodes}" th:value="${deliveryCode.code}" th:text="${deliveryCode.displayName}">FAST</option>
  </select>
 ```
+- 입력 폼에서 th:field로 인해 생경난 "id"에 th:value로 생성한 값을 넣어서 폼으로 보내주게 된다.
+- 입력 하는 폼이 아닌 경우에 th:value 값들 중 "id"와 같은 값이 있는 곳에 타임리프가 "selectd"를 만들어 자동 선택되게 만들어준다.
 
 
