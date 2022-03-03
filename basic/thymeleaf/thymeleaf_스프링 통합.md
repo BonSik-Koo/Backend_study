@@ -37,6 +37,8 @@ __[타임리프는 "th:field"를 사용해서 자동 히든필드 적용]__
 __체크 박스_다중__
 ---------------------------
 
+
+
 __ridio 버튼__
 -------------------------
 - 라디오 버튼은 멀티 체크박스와 다르게 하나만 선택이 가능하다.
@@ -49,5 +51,14 @@ __ridio 버튼__
 - 체크박스와 마찬가지로 폼으로 보내는 경우가 아닌경우 th:value의 값이 th:field로 만들어진 "id" 값에 있으면 타임리프가 "checked"를 만들어 자동 체크해준다.!!
 
 
+__셀렉트(select) 박스__
+-----------------------------------------
+- 셀렉트 박스는 여러 선택지 중에 하나를 선택할 때 사용할 수 있다.
+```
+<select th:field="*{deliveryCode}" class="form-select">
+    <option value="">==배송 방식 선택==</option>
+    <option th:each="deliveryCode : ${deliveryCodes}" th:value="${deliveryCode.code}" th:text="${deliveryCode.displayName}">FAST</option>
+ </select>
+```
 
 
