@@ -17,8 +17,9 @@ void rejectValue(@Nullable String field, String errorCode, @Nullable Object[] er
 - rejectValue는 해당 파라미터 정보를 사용해서 "Fielderror"를 자동으로 만들어준다.!!!!        
 -> 하지만 여기서 Fielderror를 사용할때는 "errorCode"를 문자열 배열로 정확한 code명을 적어주었는데 해당 메소드는 target 정보(객체이름, 필드이름)등의 이름은 적어주지 않아도 된다.      
 --> 객체이름, 필드 이름, 등을 조합해서 errorCode를 만든다.    
----> "MessageCodesResolver"가 이러한 기능을 한다.            
-
+---> "MessageCodesResolver"가 이러한 기능을 한다.    
+__----> 컨트롤러의  코드를 수정하지 않고 메시지 코드만을 변경하여 모두 적용할수 있다!!__                
+ 
 __reject()__
 ====================
 - 기본적인 기능이 "rejectValue()"와 같지만 "field"만 없다. 
