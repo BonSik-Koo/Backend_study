@@ -7,7 +7,7 @@ __rejectVaule()__
 void rejectValue(@Nullable String field, String errorCode, @Nullable Object[] errorArgs, @Nullable String defaultMessage);
 예) bindingResult.rejectValue("price", "range", new Object[]{1000, 1000000}, null)
 ```
--field : 오류 필드명
+- field : 오류 필드명
 - errorCode : 오류 코드 (※참고 :오류 코드들은 properties에 모아둔다.)
 - messageResolver를 위한 오류 코드이다.
 - errorArgs : 오류 메시지에서 "{0}" 을 치환하기 위한 값
@@ -18,7 +18,8 @@ void rejectValue(@Nullable String field, String errorCode, @Nullable Object[] er
 -> 하지만 여기서 Fielderror를 사용할때는 "errorCode"를 문자열 배열로 정확한 code명을 적어주었는데 해당 메소드는 target 정보(객체이름, 필드이름)등의 이름은 적어주지 않아도 된다.      
 --> 객체이름, 필드 이름, 등을 조합해서 errorCode를 만든다.    
 ---> "MessageCodesResolver"가 이러한 기능을 한다.    
-__----> 컨트롤러의  코드를 수정하지 않고 메시지 코드만을 변경하여 모두 적용할수 있다!!__                
+__----> 컨트롤러의  코드를 수정하지 않고 메시지 코드만을 변경하여 모두 적용할수 있다!!__      
+- "fieldError"에서는 reject value를 직접 넣었지만 해당 메소드는 객체 필드명에 들어온 값을 자동으로 "reject value"로 넣어준다.!
  
 __reject()__
 ====================
