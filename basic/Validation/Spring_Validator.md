@@ -15,7 +15,11 @@ public void init(WebDataBinder dataBinder) {
 ````
 - itemValidator는 스프링 validator 인터페이스를 구현한 검증 기능 구현체
 - WebDataBinder 는 스프링의 파라미터 바인딩의 역할을 해주고 검증 기능도 내부에 포함한다.
-- 적용할 컨트롤러에 WebDataBinder 검증기를 추가하면 -> 해당 컨트롤러에서는 검증기를 자동으로 적용할 수 있다.       
+- 적용할 컨트롤러에 WebDataBinder 검증기를 추가하면              
+-> 해당 컨트롤러에서는 검증기를 자동으로 적용할 수 있다.            
+--> 해당 컨트롤러가 호출 될때마다 처음 @InitBinder로 선언된 메소드가 호출되고 파라미터로 받는 WebDataBinder가 생성된다.    
+---> 컨트롤러가 호출될때마다 새로 생성되는 것이다.!
+----> 글로벌 설정도 가능 ( 모든 컨트롤러에 다 적용)           
 - @InitBinder 해당 컨트롤러에만 영향을 준다.
 
 ```
@@ -25,3 +29,4 @@ public String addItemV6(@Validated @ModelAttribute Item item, BindingResult bind
 - @Validated 는 검증기를 실행하라는 애노테이션이다.
 - 이 애노테이션이 붙으면 앞서 WebDataBinder 에 등록한 검증기를 찾아서 실행한다. 그런데 여러 검증기를 등록한다면 그 중에 어떤 검증기가 실행되어야 할지 구분이 필요하다. 이때 ItemValidator의 supports() 가 사용된다. 
 - ItemValidator의 supports(Item.class) 호출되고, 결과를 반환하고 true이면 ItemValidator의 validate() 가 호출된다.
+- 검증을 마치게 된 후 결과를 bindingResult에 담게 된다.
