@@ -21,6 +21,7 @@ public void init(WebDataBinder dataBinder) {
 ---> 컨트롤러가 호출될때마다 새로 생성되는 것이다.!
 ----> 글로벌 설정도 가능 ( 모든 컨트롤러에 다 적용)           
 - @InitBinder 해당 컨트롤러에만 영향을 준다.
+- @Valid annotation으로 검증이 필요한 객체를 가져오기 전에 수행할 method를 지정해주는 annotation이다.
 
 ```
 @PostMapping("/add")
