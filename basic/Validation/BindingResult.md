@@ -4,7 +4,9 @@ __< BindlingResult >__
 - "BindlingResult"는 검증할 대상 바로 다음에 위치 해야된다. 순서가 중요하다!!! -> 예를 들어 "@ModelAttribute Item item" 바로 뒤에 "BindlingResult bin~"이 위치해야된다.!!
 - BindingResult 가 없으면 : "@ModelAttribute"의 필드타입과 다른 타입의 값이 들어오게 되면 웹 브라우저에 "400오류"가 발생하게 된다. 
 -> 바인딩 오류!!             
--> 즉 요청한 URL과 전달하는 파라미터의 정보가 맞지 않아 컨트롤러가 호출되지 않는것이다!!!           
+-> 즉 요청한 URL과 전달하는 파라미터의 정보가 맞지 않아 컨트롤러가 호출되지 않는것이다!!!      
+--> Argument Resolver(http 메시지 컨버터를 포함)를 통해서 전달되는 파라미터와 지정한 파라미터의 타입을 다 비교해서 맞아야지 해당 컨트롤러를 호출하기 때문에!!!!!!!!!
+
 
 - BindingResult 가 있으면 :  다른 필드 타입의 오류 정보들을 스프링이 자동으로 "FieldError"을 생성해서(ObjectName,field, 오류메시지 등을 포함해서) "BindlingResult"에 넣어준다.            
 -> 타입에러일 경우에 스프링이 자동적으로 FieldError를 생성해서 BindlingResult에 담아준다. 여기서 에러코드는 "typeMismatch", "TypeMIsmatch.Item.price"등 자세한 에러코드는 뒤쪽에서, 즉 스프링이 타입에러가 발생하면 자동으로 담아준다.!!!!!!
