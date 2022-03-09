@@ -6,9 +6,12 @@ __< BindlingResult >__
 -> 바인딩 오류!!             
 -> 즉 요청한 URL과 전달하는 파라미터의 정보가 맞지 않아 컨트롤러가 호출되지 않는것이다!!!           
 
-- BindingResult 가 있으면 :  다른 필드 타입의 오류 정보들을 스프링이 자동으로 "FieldError"을 생성해서(ObjectName,field, 오류메시지 등을 포함해서) "BindlingResult"에 넣어준다.
+- BindingResult 가 있으면 :  다른 필드 타입의 오류 정보들을 스프링이 자동으로 "FieldError"을 생성해서(ObjectName,field, 오류메시지 등을 포함해서) "BindlingResult"에 넣어준다.            
+-> 타입에러일 경우에 스프링이 자동적으로 FieldError를 생성해서 BindlingResult에 담아준다. 여기서 에러코드는 "typeMismatch", "TypeMIsmatch.Item.price"등 자세한 에러코드는 뒤쪽에서, 즉 스프링이 타입에러가 발생하면 자동으로 담아준다.!!!!!!
 
-__FieldError__
+
+
+__FieldError_
 -------------------------
 - BindlingResult에 담는 객체중 하나로써 ObjectError의 자식 인터페이스 이다.
 - 특정 필드의 오류의 관하여 사용하는 인터페이스
