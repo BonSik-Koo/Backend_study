@@ -95,6 +95,6 @@ __<@ModelAttribute>__
 
 __<@RequestBody : HttpMessageConverter(Json,String) 사용>__     
 -------------------------------
-- HttpMessageConverter 는 @ModelAttribute 와 다르게 각각의 필드 단위로 적용되는 것이 아니라, 전체 객체 단위로 적용된다. 따라서 메시지 컨버터의 작동이 성공해서 Json 객체를 만들어야 @Valid , @Validated 가 적용된다.   
+- HttpMessageConverter(Argument Resolver안에 있는) 는 @ModelAttribute 와 다르게 각각의 필드 단위로 적용되는 것이 아니라, 전체 객체 단위로 적용된다. 따라서 메시지 컨버터의 작동이 성공해서 Json 객체를 만들어야 @Valid , @Validated 가 적용된다.   
 -> 타입오류가 발생하면 Json객체를 만드는거부터 실패하기 때문에 해당 컨트롤러가 호출이 되지 않는다.!!    
 - @RequestBody 는 HttpMessageConverter 단계에서 JSON 데이터를 객체로 변경하지 못하면 이후 단계 자체가 진행되지 않고 예외가 발생한다. 컨트롤러도 호출되지 않고, Validator도 적용할 수 없다.     
