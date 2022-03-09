@@ -75,3 +75,24 @@ public interface UpdateCheck {
 - 참고) @Valid(자바표준제공) 에는 groups를 적용할 수 있는 기능이 없다. 따라서 groups를 사용하려면 @Validated(스프링제공) 를 사용해야 한다.
 - 추가로 실제 프로젝트에서 등록폼의 객체와 수정폼의 객체가 다른 상황이 많기 때문에 group사용하지 않고 대부분  form을 분리시켜 사용을 많이 한다.
 
+__Bean Validation -Http 메시지 컨버터__
+===================================
+- @Valid , @Validated 는 HttpMessageConverter(@RequestBody)에도 적용할 수 있다. -> http 바디에 Json형태로 오는 데이터도 검증 가능
+- "@RequestBody"의 애노테이션을 사용하면 된다. @ModelAttribute(쿼리 스트링, Post form처리)와 같이 Bean Validation을 사용하면 된다.!!! 
+- httpmessageConverter가 컨트롤러를 호출하기전 Json객체의 필드 타입 오류가 발생할  경우 해당 컨트롤러를 호출도 하지 않고 예외가 발생한다.   
+-> httpmessageConverter가 Json객체를 생성하는 거 자체를 실패함 
+--> 검증기도 작동하지 못함      
+
+
+__@ModelAttribute vs @RequestBody__
+========================================
+__<@ModelAttribute>__     
+- BindingResult가 있을 때 HTTP 요청 파리미터를 처리하는 @ModelAttribute 는 각각의 필드 단위로 세밀하게 적용된다. 그래서 특정 필드에 타입이 맞지 않는 오류가 발생해도 나머지 필드는 정상 처리할 수 있었다.    
+-> 타입오류가 발생해도 해당 컨트롤러가 실행된다.!!
+- @ModelAttribute 는 필드 단위로 정교하게 바인딩이 적용된다. 특정 필드가 바인딩 되지 않아도 나머지 필드는 정상 바인딩 되고, Validator를 사용한 검증도 적용할 수 있다.
+
+
+__<@RequestBody : HttpMessageConverter(Json,String) 사용>__     
+- HttpMessageConverter 는 @ModelAttribute 와 다르게 각각의 필드 단위로 적용되는 것이 아니라, 전체 객체 단위로 적용된다. 따라서 메시지 컨버터의 작동이 성공해서 Json 객체를 만들어야 @Valid , @Validated 가 적용된다.   
+-> 타입오류가 발생하면 Json객체를 만드는거부터 실패하기 때문에 해당 컨트롤러가 호출이 되지 않는다.!!    
+- @RequestBody 는 HttpMessageConverter 단계에서 JSON 데이터를 객체로 변경하지 못하면 이후 단계 자체가 진행되지 않고 예외가 발생한다. 컨트롤러도 호출되지 않고, Validator도 적용할 수 없다.     
