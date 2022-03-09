@@ -20,7 +20,7 @@ __Bean_Validation__
 ```
 public String addItemV(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) 
 ```
-- 이 Validator는 @NotNull 같은 애노테이션을 보고 검증을 수행한다. 이렇게 글로벌 Validator가 적용되어 있기 때문에, @Valid ,@Validated 만 적용하면 된다.
+- 이 Validator는 @NotNull 같은 애노테이션을 보고 검증을 수행한다. 이렇게 글로벌 Validator가 적용되어 있기 때문에, @Valid ,@Validated 만 적용하면 된다. -> 애당 애노에티션이 있는 객체를 검증해준다.!!!          
 - 검증 오류가 발생하면, FieldError , ObjectError 를 생성해서 BindingResult 에 담아준다.
 - @ModelAttribute 로 각각의 필드에 타입 변환을 시도한다. 만약 __타입에러가 발생한다면__ 해당 오류타입,오류코드들을 포함하는 "FieldError"를 생성하여 BindingResult에 담아준다. 또한 이런 상황에서는 "Bean Validation"이 적용되지 않는다!!!!.
 - @ModelAttribute 로 각각의 필드에 타입 변환을 시도한다. 만약 __타입에러가 발생하지 않는다면__ "Bean Validation"이 적용된다.!!!
