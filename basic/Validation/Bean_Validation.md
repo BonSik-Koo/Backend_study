@@ -27,7 +27,7 @@ public String addItemV(@Validated @ModelAttribute Item item, BindingResult bindi
 - @ModelAttribute 로 각각의 필드에 타입 변환을 시도한다. 만약 __타입에러가 발생한다면__ 해당 오류타입,오류코드들을 포함하는 "FieldError"를 생성하여 BindingResult에 담아준다. 또한 이런 상황에서는 "Bean Validation"이 적용되지 않는다!!!!.
 - @ModelAttribute 로 각각의 필드에 타입 변환을 시도한다. 만약 __타입에러가 발생하지 않는다면__ "Bean Validation"이 적용된다.!!!
 
-__Bean Validation 에러코드__
+__Bean Validation - 에러코드__
 =================================
 - 오류 코드가 애노테이션 이름으로 등록된다. 마치 typeMismatch 와 유사하다.
 - 필드에 지정한 애노테이션 이름 기반으로 오류코드를 MessageCodesResolver가 아래와 같이 생성한다.
@@ -47,5 +47,31 @@ Range
 - 만약 @NotBlank, @Range 두개의 애노테이션이 필드에 선언되있으면 순서대로 검증하면서 오류가 발생한 애노테이션의 이름을 기반으로 에러코드를 생성한다.
 - 사용자가 "properties"에 Level에 맞게 오류 메시지를 정의하여 사용하면 된다. 만약 메시시 코드를 생성하지 않으면 라이브러리가 제공하는 기본 값을 사용하게 된다. 추가로 기본값을 @NotBlank(message="~") 처럼 애노테이션에도 지정할 수 있다.   
 
+__Bean Validation - groups__
+================================
+- 동일한 모델 객체를 등록폼, 수정폼에서 각각 다르게 검증해야 되는 상황에서 사용된다.    
+-> 등록시에 검증할 기능과 수정시에 검증할 기능을 각각 그룹으로 나누어 적용할 수 있다.
+
+```
+public interface SaveCheck {
+}
+public interface UpdateCheck {
+}
+```
+- groups을 구분하는 인터페이스, 클래스를 지정한다.
+
+```
+@NotNull(groups = UpdateCheck.class) //수정시에만 적용
+ private Long id;
+
+ @NotBlank(groups = {SaveCheck.class, UpdateCheck.class})
+ private String itemName;
+
+ @NotNull(groups = {SaveCheck.class, UpdateCheck.class})
+ @Range(min = 1000, max = 1000000, groups = {SaveCheck.class,UpdateCheck.class})
+ private Integer price;
+```
+- 사용될 검증 기능의 그룹을 지정하는 것이다.
+- 참고) @Valid(자바표준제공) 에는 groups를 적용할 수 있는 기능이 없다. 따라서 groups를 사용하려면 @Validated(스프링제공) 를 사용해야 한다.
 
 
