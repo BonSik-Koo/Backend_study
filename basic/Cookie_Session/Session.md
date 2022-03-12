@@ -16,3 +16,5 @@ __HttpSession__
 
 - 그래서 homeController에서 getSession했을때 해당 id를 가진 세션(안에는 여러개의 key,value)이 없으면 그냥 리턴한것 , 
   그리고 getAttribute를 통해 해당 id를 가진 세션안에 지정한 key(사용자가 정의한 상수) 의 value(member)를 가져온다
+
+- 즉 각 id(UUID로 인해 생성된)를 가지는 세션이 있고 각 세션안에는 key,value로 이루어져있다. value는 보통 객체 , key는 사용자가 객체를 의미하는 상수를 대부분 
