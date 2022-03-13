@@ -70,3 +70,44 @@ __스프링에서 제공해주는 @SessionAttribute 애노테이션__
  Model model)"__     
 -> HttpSession의 메소드 중 "request.getSession(false)", "session.getAttribute(SessionConst.LOGIN_MEMBER)" 의 기능을 동시에 해주는 애노테이션 이다.      
 --> 먼저 session-id의 세션을 찾게 되고 세션이 없으면 생성하지 않는다. 그 후 해당 세션내에 key를 통해서 value를 전달 받게 된다.!!! 없을시 null 반환.
+
+
+__세션 정보__
+====================================
+```
+//세션 데이터 출력
+ session.getAttributeNames().asIterator()
+ .forEachRemaining(name -> log.info("session name={}, value={}",
+name, session.getAttribute(name)));
+ log.info("sessionId={}", session.getId());
+ log.info("maxInactiveInterval={}", session.getMaxInactiveInterval());
+ log.info("creationTime={}", new Date(session.getCreationTime()));
+ log.info("lastAccessedTime={}", new Date(session.getLastAccessedTime()));
+ log.info("isNew={}", session.isNew());
+```
+- sessionId : 세션Id, JSESSIONID 의 값이다. 예) 34B14F008AA3527C9F8ED620EFD7A4E1
+- maxInactiveInterval : 세션의 유효 시간, 예) 1800초, (30분)
+- creationTime : 세션 생성일시
+- lastAccessedTime : 세션과 연결된 사용자가 최근에 서버에 접근한 시간, 클라이언트에서 서버로 sessionId ( JSESSIONID )를 요청한 경우에 갱신된다.
+- isNew : 새로 생성된 세션인지, 아니면 이미 과거에 만들어졌고, 클라이언트에서 서버로 sessionId ( JSESSIONID )를 요청해서 조회된 세션인지 여부
+
+__세션 타임아웃 설정__
+===========================
+- session.invalidate(), session.removeAttribute()등을 사용해서 session을 삭제가 가능하다. 하지만 만은 사용자가 로그아웃을 하지 않고 웹 브라우저를 종료한다. 그렇게 되면 HTTP 비 연결성으로 인해 서버 입장에서는 해당 사용자가 웹 브라우저를 종료한것인지 알수 없다. 서버측에서 session을 함부로 삭제할 수 없다.
+- 또한 세션은 기본적으로 서버측 메모리에 생성된다. 메모리 크기가 무한하지 않기 때문에 꼭 필요한 경우에 생성하고 적절히 삭제 해야된다.
+
+- "HttpSession"은 세션의 정보 중 "session.getLastAccessedTime()"인 클라이언트가 가장 마지막에 요청한 시간 기준으로 설정한 시간 경과시 자동으로 session을 삭제하는 방식을 사용한다.     
+-> 타임아웃이 마지막에 요청한 시간 부터 다시 초기화 되며 동작한다.   
+- 마지막 요청 시간(LastAccessedTiem) 이후에 timout이 지나면, WAS(톰겟)내부에서 해당 세션을 삭제한다.
+
+__세션 타임 아웃 설정__
+----------------------------
+__1. 스프링 부트로 글로벌 설정__
+- application.properties -> server.servlet.session.timeout=60 : 60초
+- 기본적으로(default) session은 1800(30분) 유지된다. 
+- 스프링 부트를 사용하여 설정할 경우 모든 session에 대해서 지정한 시간만큼 타임아웃이 설정된다.
+
+__2. 특정 세션 단위로 시간 설정__
+- session.setMaxInactiveInterval(1800) -> 특정 세션에 대해서 자바 코드를 사용해서 타임아웃을 설정할 수도 있다.
+
+
