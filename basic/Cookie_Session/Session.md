@@ -65,7 +65,7 @@ __<동작 방식>__
 
 __스프링에서 제공해주는 @SessionAttribute 애노테이션__
 =====================================
-- 이미 로그인 된 사용자를 찾을때 사용되고 이 기능은 해당 세션이 없을시 생성하는 기능이 없다. -> 세션을 생성하지 않는다.!!
+- 이미 로그인 된 사용자를 찾을때 사용되고 이 기능은 해당 세션이 없을시 생성하는 기능이 없다. -> 세션을 생성하지 않는다.!!          
 __ex) " public String homeLoginV3Spring(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
  Model model)"__     
 -> HttpSession의 메소드 중 "request.getSession(false)", "session.getAttribute(SessionConst.LOGIN_MEMBER)" 의 기능을 동시에 해주는 애노테이션 이다.      
