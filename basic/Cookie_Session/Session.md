@@ -63,3 +63,10 @@ __<동작 방식>__
 5) 클라이언트는 재접속 시, 서버에서 request의 쿠키의 session-id의 세션을 찾게 되고 세션 내부에서 필요한 값이 있는지 확인하게 된다.
 
 
+__스프링에서 제공해주는 @SessionAttribute 애노테이션__
+=====================================
+- 이미 로그인 된 사용자를 찾을때 사용되고 이 기능은 해당 세션이 없을시 생성하는 기능이 없다. -> 세션을 생성하지 않는다.!!
+- ex) " public String homeLoginV3Spring(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+ Model model)"     
+-> HttpSession의 메소드 중 "request.getSession(false)", "session.getAttribute(SessionConst.LOGIN_MEMBER)" 의 기능을 동시에 해주는 애노테이션 이다.      
+--> 먼저 session-id의 세션을 찾게 되고 세션이 없으면 생성하지 않는다. 그 후 해당 세션내에 key를 통해서 value를 전달 받게 된다.!!! 없을시 null 반환.
