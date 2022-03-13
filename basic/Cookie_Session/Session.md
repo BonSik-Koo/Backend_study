@@ -25,7 +25,7 @@ __" HttpSession session = request.getSession(false) "__
 
 __세션에 클라이언트 정보 보관__
 -----------------------------------
-__" session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember) " __     
+__" session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember) "__     
 - 기존에 있는 세션을 가져오거나 새로 만든 세션에 map형태로 key는 "SessionConst.LOGIN_MEMBER"(임의로 지정해둔 상수 값) 이고 value는 "loginMember" 사용자 정보를 담아 둔다.
 - 하나의 세션에 여러개의 key, value를 넣어둘 수 있다.
 
@@ -38,7 +38,7 @@ __" Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER
 
 __세션에 있는 정보 삭제하기__
 ----------------------------
-__" session.invalidate() " __    
+__" session.invalidate() "__    
 - 해당 세션내에 있는 정보(key,value)를 모두 삭제한다.
 
 __" session.removeAttribute(SessionConst.LOGIN_MEMBER) " __      
