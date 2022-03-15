@@ -33,11 +33,76 @@ __<예외 상황 흐름>
 -->예외 발생시 postHadle는 호출되지 않지만 "afterCompletion"은 항상 호출 되기 때문에 예외와 무관하게 공통 처리를 하려면 해당 메소드를 사용하면 된다.
 
 
-__스프링 인터셉터 사용__
+__스프링 인터셉터 사용1 - Log 출력__
 =================================
+```
+/** 스프링 인터셉트 사용 - Log 남기는 기능의 필터 **/
+@Slf4j
+public class LogInterceptor implements HandlerInterceptor {
 
+    public static final String LOG_ID = "logId";
 
+    /** 컨트롤러 호출전 (정확힌 핸들러 어댑터 호출전) **/
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String requestURI = request.getRequestURI();
+        String uuid = UUID.randomUUID().toString();
+        request.setAttribute(LOG_ID, uuid);
 
+        log.info("REQUEST [{}] [{}] [{}]", uuid, requestURI, handler);
+        return true; //false 진행x
+    }
+
+    /** 핸들러(컨트롤러)호출후  **/
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        log.info("postHandel [{}]" ,modelAndView);
+    }
+
+    /** 뷰 렌더링 마친 후  **/
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        String requestURI = request.getRequestURI();
+        Object logId = request.getAttribute(LOG_ID);
+
+        log.info("REQUEST [{}] [{}]", logId, requestURI);
+        if(ex!=null) {
+            log.error("afterCompletion error!!", ex);
+        }
+    }
+}
+```
+- 스프링 인터셉터를 사용하려면 "HandlerInterceptor"의 인터페이스를 구현해야된다. 
+
+- request.setAttribute(LOG_ID, uuid)   
+-> 서블릿 필터의 경우 지역변수로 해결이 가능하지만, 스프링 인터셉터는 호출 시점이 완전히 분리되어 있다. 따라서 preHandle 에서 지정한 값을 postHandle , afterCompletion 에서 함께 사용하려면 어딘가에 담아두어야 한다. LogInterceptor 도 싱글톤 처럼 사용되기 때문에 맴버변수를 사용하면 위험하다. 따라서 request 에 담아두었다. 이 값은 afterCompletion 에서 request.getAttribute(LOG_ID) 로 찾아서 사용한다.
+
+- return true -> true 면 정상 호출이다. 다음 인터셉터나 컨트롤러가 호출된다.
+
+- "preHandle"메소드에서 "Handler"파라미터를 받아올 수 있다.     
+-> 핸들러 목록조회(핸들러 매핑- @controller,@RequestMapping 을 통한 컨트롤러 탐색)를 통해 컨트롤러를 찾게 되고 해당 핸들러 어댑터를 호출하기전에 스프링 인터셉터가 호출되기 때문에 컨트롤러 객체를 받아올 수 있다.  
+
+-------------------------------------------
+```
+ @Configuration
+public class WebConfig implements WebMvcConfigurer {
+ @Override
+ public void addInterceptors(InterceptorRegistry registry) {
+ registry.addInterceptor(new LogInterceptor())
+ .order(1)
+ .addPathPatterns("/**")
+ .excludePathPatterns("/css/**", "/*.ico", "/error");
+ }
+ //...
+}
+```
+- 인터셉터를 등록하는 코드
+- WebMvcConfigurer 가 제공하는 addInterceptors() 를 사용해서 인터셉터를 등록할 수 있다. -> 스프링이 제공하는 방식. 
+- registry.addInterceptor(new LogInterceptor()) : 인터셉터를 등록한다.
+- order(1) : 인터셉터의 호출 순서를 지정한다. 낮을 수록 먼저 호출된다.
+- addPathPatterns("/**") : 인터셉터를 적용할 URL 패턴을 지정한다. -> 서블릿 필터와 URL 패턴이 다르다!.
+- excludePathPatterns("/css/**", "/*.ico", "/error") : 인터셉터에서 제외할 패턴을 지정한다.     
+-> 필터와 비교해보면 인터셉터는 addPathPatterns , excludePathPatterns 로 매우 정밀하게 URL 패턴을 지정할 수 있다.
 
 
 
