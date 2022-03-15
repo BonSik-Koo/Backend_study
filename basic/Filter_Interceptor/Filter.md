@@ -71,6 +71,7 @@ public class LogFilter implements Filter {
 - init(): 필터 초기화 메서드, 서블릿 컨테이너가 생성될 때 호출된다.
 - doFilter(): 고객의 요청이 올 때 마다 해당 메서드가 호출된다. 필터의 로직을 구현하면 된다.
 - destroy(): 필터 종료 메서드, 서블릿 컨테이너가 종료될 때 호출된다
+- 최근에는 "Filter" 인터페이스의 항목을 모두 구현 하지 않아도 되고 "doFilter()"의 메소드만 구현하면 된다.
 
 
 
