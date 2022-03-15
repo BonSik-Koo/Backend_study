@@ -100,7 +100,7 @@ public class WebConfig implements WebMvcConfigurer {
 - WebMvcConfigurer 가 제공하는 addInterceptors() 를 사용해서 인터셉터를 등록할 수 있다. -> 스프링이 제공하는 방식. 
 - registry.addInterceptor(new LogInterceptor()) : 인터셉터를 등록한다.
 - order(1) : 인터셉터의 호출 순서를 지정한다. 낮을 수록 먼저 호출된다.
-- addPathPatterns("/**") : 인터셉터를 적용할 URL 패턴을 지정한다. -> 서블릿 필터와 URL 패턴이 다르다!.
+- addPathPatterns("/**") : 인터셉터를 적용할 URL 패턴을 지정한다. -> 서블릿 필터와 URL 패턴과  다르다!.
 - excludePathPatterns("/css/**", "/*.ico", "/error") : 인터셉터에서 제외할 패턴을 지정한다.     
 -> 필터와 비교해보면 인터셉터는 addPathPatterns , excludePathPatterns 로 매우 정밀하게 URL 패턴을 지정할 수 있다.
 
