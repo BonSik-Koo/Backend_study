@@ -33,7 +33,7 @@ __<예외 상황 흐름>
 -->예외 발생시 postHadle는 호출되지 않지만 "afterCompletion"은 항상 호출 되기 때문에 예외와 무관하게 공통 처리를 하려면 해당 메소드를 사용하면 된다.
 
 
-__스프링 인터셉터 사용1 - Log 출력__
+__스프링 인터셉터 사용1 - Log 출 력__
 =================================
 ```
 /** 스프링 인터셉트 사용 - Log 남기는 기능의 필터 **/
@@ -103,6 +103,59 @@ public class WebConfig implements WebMvcConfigurer {
 - addPathPatterns("/**") : 인터셉터를 적용할 URL 패턴을 지정한다. -> 서블릿 필터와 URL 패턴과  다르다!.
 - excludePathPatterns("/css/**", "/*.ico", "/error") : 인터셉터에서 제외할 패턴을 지정한다.     
 -> 필터와 비교해보면 인터셉터는 addPathPatterns , excludePathPatterns 로 매우 정밀하게 URL 패턴을 지정할 수 있다.
+
+
+
+__스프링 인터셉터 사용2 - 로그인 확인 기능__
+=================================
+```
+@Slf4j
+public class LoginCheckInterceptor implements HandlerInterceptor {
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        String requestURI = request.getRequestURI();
+        log.info("인증 체크 인터셉터 실행 {}", requestURI);
+
+        HttpSession session = request.getSession();
+        if(session==null || session.getAttribute(SessionConst.LOGIN_MEMBER)==null) {
+            log.info("미인증 사용자 요청");
+            response.sendRedirect("/login?redirectURL=" + requestURI);
+            return false;
+        }
+
+        return true;
+    }
+}
+```
+- HandlerInterceptor 인터페이스를 구현한 인터셉터 구현체. -> 필요한 메소드를 오버라이딩하여 사용하면 된다.
+- retrun의 값에 따라 다음 인터셉터, 컨트롤러 호출(더정확힌 핸들러 어댑터 호출)을 하게 된다.
+- 서블릿 필터의 같은 경우에는 해당 로직 내에 적용하지 않을 "URL"을 판별하는 기능이 있었지만 스프링 인터셉터 같은 경우에는 인터셉터를 등록하는 부분에서 "제외할 URL"을 지정할 수 있기 때문에 여기서 하지 않는다.    
+-> 서블릿 필터보다 편하고 좋아진다.
+
+-------------------------------------
+```
+public class WebConfig implements WebMvcConfigurer {
+
+    /** 스프링 인터셉터 사용 - 인터페이스의 메소드 구현하여 사용(자동으로 스프링 인터셉터로 등록) - Log 기능의 인터셉터 , 로그인 확인 기능의 인터셉터 **/
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LogInterceptor())
+                .order(1)
+                .addPathPatterns("/**") //모든 경로!!!!!
+                .excludePathPatterns("/css/**", "/*.ico", "/error");
+
+        registry.addInterceptor(new LoginCheckInterceptor())
+                .order(2)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/", "/member/add", "/login", "/logout", "/css/**","/*.ico", "/error");
+    }
+
+}
+```
+- 인터셉터를 스프링 인터셉터로 등록하는 부분 코드 -> "WebMvcConfigurer" 인터페이스를 구현하게 되면 자동으로 스프링 인터셉터로 등록된다.
+- 인터셉터 하지않을 특정 URL들을 넣어 인터셉터로 등록할 수 있다.
 
 
 
