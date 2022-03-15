@@ -72,7 +72,7 @@ public class LogInterceptor implements HandlerInterceptor {
     }
 }
 ```
-- 스프링 인터셉터를 사용하려면 "HandlerInterceptor"의 인터페이스를 구현해야된다. 
+- 스프링 인터셉터를 사용하려면 "HandlerInterceptor"의 인터페이스를 구현해야된다. -> 필요한 메소드를 오버라이딩 하여 사용하면 된다.
 
 - request.setAttribute(LOG_ID, uuid)   
 -> 서블릿 필터의 경우 지역변수로 해결이 가능하지만, 스프링 인터셉터는 호출 시점이 완전히 분리되어 있다. 따라서 preHandle 에서 지정한 값을 postHandle , afterCompletion 에서 함께 사용하려면 어딘가에 담아두어야 한다. LogInterceptor 도 싱글톤 처럼 사용되기 때문에 맴버변수를 사용하면 위험하다. 따라서 request 에 담아두었다. 이 값은 afterCompletion 에서 request.getAttribute(LOG_ID) 로 찾아서 사용한다.
