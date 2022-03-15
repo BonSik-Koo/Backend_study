@@ -9,7 +9,7 @@ __서블릿 필터__
 
 - 필터는 체인으로 구성되는데, 여러 필터를 넣을수 있다. 사용자가 정의한 우선순의 대로도 필터를 적용할 수 있다.
 
-__서블릿 필터 사용__
+__서블릿 필터 사용1 -> log 남기기__
 ============================
 ```
 @Bean
@@ -72,6 +72,86 @@ public class LogFilter implements Filter {
 - doFilter(): 고객의 요청이 올 때 마다 해당 메서드가 호출된다. 필터의 로직을 구현하면 된다.
 - destroy(): 필터 종료 메서드, 서블릿 컨테이너가 종료될 때 호출된다
 - 최근에는 "Filter" 인터페이스의 항목을 모두 구현 하지 않아도 되고 "doFilter()"의 메소드만 구현하면 된다.
+
+
+__서블릿 필터 사용2 -> login 확인__
+================================
+```
+/** 서블릿 필터 사용 - 로그인 확인 기능의 필터 **/
+@Slf4j
+public class LoginCheckFilter implements Filter {
+
+    //검사를 하지않을 URL!
+    private static final String[] whitelist = {"/", "/members/add", "/login", "logout", "/css/*"};
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        String requestURI = httpRequest.getRequestURI();
+
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+        try {
+            log.info("인증 체크 필터 시작 {}", requestURI);
+
+            if(isLoginCheckPath(requestURI)) {
+                log.info("인증 체크 로직 실행 {}",requestURI);
+
+                HttpSession session = httpRequest.getSession();
+                //로그인 하지 않은 사용자
+                if(session==null || session.getAttribute(LOGIN_MEMBER)==null) {
+                    log.info("미인증 사용자 요청 {}",requestURI);
+
+                    /**
+                     * 로그인으로 redirect -> response "redirect"의 기능의 메소드 사용
+                     * 추가로 사용자가 들어온 URL을 쿼리파라미터로 넘기므로써 사용자가 login 한 후 처음 들어온 URL로 보내주기 위해서 -> 파라미터로 넘김
+                     */
+                    httpResponse.sendRedirect("/login?redirectURL=" + requestURI);
+
+                    return; //여기가 중요, 미인증 사용자는 다음으로 진행하지 않고 끝!!! -> 서블릿도 호출 하지 않는다.!!
+                }
+            }
+
+            chain.doFilter(request, response);
+        }catch(Exception e) {
+            throw e;
+        }finally {
+            log.info("인증 체크 필터 종료 {}", requestURI);
+        }
+    }
+
+    /**
+     * 화이트 리스트의 경우 인증 체크X
+     */
+    private boolean isLoginCheckPath(String requestURI) {
+        return !PatternMatchUtils.simpleMatch(whitelist, requestURI); //검사해야할 URI일 경우 true
+    }
+
+}
+```
+- Http 요청의 처리하기 위해 서블릿(디스패처 서블릿)이 호출되기전 서블릿 컨테이너에 "서블릿 필터" (로그인 확인 기능)를 사용한다.
+- 로그인 하지 않은 이용자(session에 해당 값이 없는)는 "return"을 통해 서블릿을 호출하지 않고 "redirect"를 response에 담으므로 웹 브라우저가 redirect요청을 한다.!!!
+- 해당 URL를 적용 여부를 아래 코드와 같이 서블릿 컨테이너에 필터(FiterRegistraionBean)로 넣을때 URL를 지정해줄 수 있지만 그렇게 되면 서비스가 확장되었을 때 아래 부분의 코드까지 변경해야되기 때문에 필터내에서 URL를 판별하는 작업을 해준다. 
+
+-------------------------------------
+
+```
+/** 서블릿 필터 사용 - 로그인 확인 기능의 필터 등록**/
+    @Bean
+    public FilterRegistrationBean loginCheckFilter() {
+        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
+
+        filterRegistrationBean.setFilter(new LoginCheckFilter());
+        filterRegistrationBean.setOrder(2);
+        filterRegistrationBean.addUrlPatterns("/*");
+
+        return filterRegistrationBean;
+    }
+```
+- 필터 등록 
+
+
 
 
 
