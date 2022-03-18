@@ -1,7 +1,26 @@
 __ArgumentReslover란__
 =========================
--
--
+
+![image](https://user-images.githubusercontent.com/96917871/159000660-3dbf1bc1-1379-4067-9100-077c7337ca67.png)
+
+- 애노테이션 기반 컨트롤러에서 해당 애노테이션을 처리하는 기능을 한다. (스프링에 약 30개가 넘게 존재)
+- 핸들러 어댑터에서 실제 핸들러(컨트롤러)를 호출하는 과정에서 각 애노테이션을 ArgumentResolver가 처리한다.
+- HttpServletRequest , Model 은 물론이고, @RequestParam , @ModelAttribute 같은 애노테이션 그리고 @RequestBody , HttpEntity 같은 HTTP 메시지를 처리하는 부분까지 매우 큰 유연함을 보여주었다
+- 애노테이션 기반 컨트롤러를 처리하는 "RequestMapping핸들러 어댑터" 는 바로 이 ArgumentResolver 를 호출해서 컨트롤러(핸들러)가 필요로 하는 다양한 파라미터의 값(객체)을 생성한다. 그리고 이렇게 파리미터의 값이 모두 준비되면 컨트롤러를 호출하면서 값을 넘겨준다.      
+
+※참고: 또한 컨트롤러에서 리턴할때(디스패처 서블릿에게) 컨트롤러에서 String으로 뷰 이름을 반환해도, 동작하는 이유가 바로 "ReturnValueHandler 덕분이다.     
+-> ArgumentResolver 와 비슷한데, 이것은 응답 값을 변환하고 처리한다.
+
+
+__<HTTP 메시지 컨버터>__
+--------------------------
+
+![image](https://user-images.githubusercontent.com/96917871/159001021-16a390a7-b735-493f-874b-9dcbb56c9aa2.png)
+
+- 애노테이션 중 @RequestBody, HttpEntity와 같이 "message Body"에 있는 것을 처리하는 경우 사용된다. -> "ArgumentResolver"가 사용
+- 요청의 경우 @RequestBody 를 처리하는 ArgumentResolver 가 있고, HttpEntity 를 처리하는
+rgumentResolver 가 있다. 이 ArgumentResolver 들이 HTTP 메시지 컨버터를 사용해서 필요한
+객체를 생성하는 것이다. 
 
 
 
