@@ -18,12 +18,7 @@ __<HTTP 메시지 컨버터>__
 ![image](https://user-images.githubusercontent.com/96917871/159001021-16a390a7-b735-493f-874b-9dcbb56c9aa2.png)
 
 - 애노테이션 중 @RequestBody, HttpEntity와 같이 "message Body"에 있는 것을 처리하는 경우 사용된다. -> "ArgumentResolver"가 사용
-- 요청의 경우 @RequestBody 를 처리하는 ArgumentResolver 가 있고, HttpEntity 를 처리하는
-rgumentResolver 가 있다. 이 ArgumentResolver 들이 HTTP 메시지 컨버터를 사용해서 필요한
-객체를 생성하는 것이다. 
-
-
-
+- 요청의 경우 @RequestBody 를 처리하는 ArgumentResolver 가 있고, HttpEntity 를 처리하는 ArgumentResolver 가 있다. 이 ArgumentResolver 들이 HTTP 메시지 컨버터를 사용해서 필요한 객체를 생성하는 것이다. 
 
 
 __ArgumentResolver 활용__
