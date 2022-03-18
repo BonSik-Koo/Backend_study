@@ -87,7 +87,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
 ```
 - "ArgumentResolver" 기능 구현         
 -> 각 컨트롤러에서 "사용자가 지정한(@Login)애노테이션"을 만나면 사용자가 구현한 "ArgumentResolver"가 동작하게 된다.               
---> 내부에 캐시가 있어서 "supportParameter"는 한번만 실행되고 캐시에서 꺼내서 애노테이션을 만날때마다 실행된다.        - ---
+--> 내부에 캐시가 있어서 "supportParameter"는 한번만 실행되고 캐시에서 꺼내서 애노테이션을 만날때마다 실행된다.  
 
 - "supportsParameter" -> 전달되는 파라미터의 애노테이션을 확인한다.
 - "resolveArgument" -> 위에서 원하는 애노테이션이라면(반환 값이 true)이면 해당 메소드를 실행
