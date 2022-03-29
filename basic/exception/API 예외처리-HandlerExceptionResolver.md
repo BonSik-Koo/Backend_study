@@ -53,9 +53,9 @@ public class MyHandlerExceptionResolver implements HandlerExceptionResolver {
 --> 전달된 ModelAndView의 형태에 따라 아래와 같이 "DispatcherServlet"이 동작하게 된다.     
 
 
-▶ 빈 ModelAndView: new ModelAndView() 처럼 빈 ModelAndView 를 반환하면 뷰를 렌더링 하지 않고, 정상 흐름(사용자가 지정한 처리 방식으로)으로 서블릿이 리턴된다.                     
-▶ ModelAndView 지정: ModelAndView 에 View , Model 등의 정보를 지정해서 반환하면 뷰를 렌더링한다.                 
-▶ null: null 을 반환하면, 다음 ExceptionResolver 를 찾아서 실행한다. 만약 처리할 수 있는 ExceptionResolver 가 없으면 예외 처리가 안되고, 기존에 발생한 예외를 서블릿 밖으로 던진다.          
+» 빈 ModelAndView: new ModelAndView() 처럼 빈 ModelAndView 를 반환하면 뷰를 렌더링 하지 않고, 정상 흐름(사용자가 지정한 처리 방식으로)으로 서블릿이 리턴된다.                     
+» ModelAndView 지정: ModelAndView 에 View , Model 등의 정보를 지정해서 반환하면 뷰를 렌더링한다.                 
+» null: null 을 반환하면, 다음 ExceptionResolver 를 찾아서 실행한다. 만약 처리할 수 있는 ExceptionResolver 가 없으면 예외 처리가 안되고, 기존에 발생한 예외를 서블릿 밖으로 던진다.          
 
 
 
