@@ -5,8 +5,10 @@
 __API 예외 처리 HandlerExceptionResolver__
 ==================================
 - 스프링 MVC는 컨트롤러(핸들러) 밖으로 예외가 던져진 경우 예외를 해결하고, 동작을 새로 정의할 수 있는 방법을 제공한다. 컨트롤러 밖으로 던져진 예외를 해결하고, 동작 방식을 변경하고 싶으면 HandlerExceptionResolver 를 사용하면 된다. 줄여서 ExceptionResolver 라 한다.             
--> 이름 그대로 Exception을 해결하는것이 목적이다.
-- 예외가 발생하게 해서 서블릿을 넘어 WAS로 예외가 전달되게 되면 HTTP상태코드는 예외와 상관없이 500으로 처리된다. 따라서 해당 ExceptionResolver를 사용하게 되면 예외에 따라서 400,404등 다른 상태코드로 처리할 수 있다.
+-> 이름 그대로 Exception을 해결하는것이 목적이다.      
+--> WAS까지 예외를 던지지 않는 것이다.!!!! 아래의 예에서는 정상적인 처리를 "response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());" 로 지정하여 WAS로 전달되고 BasicController까지 호출하여 처리하지만 기본적으로 해당 "ExceptionResolver"를 사용하게 되면 WAS까지 에러를 전달하지 않고 사용자가 지정한 로직으로 정상적이게 처리된다.(보통 다시 BasicController를 호출하지 않고 처리함)           
+
+- 예외가 발생하게 해서 서블릿을 넘어 WAS로 예외가 전달되게 되면 HTTP상태코드는 예외와 상관없이 500으로 처리된다. 따라서 해당 ExceptionResolver를 사용하게 되면 예외에 따라서 400,404등 다른 상태코드로 처리할 수 있다.     
 
 
 
