@@ -121,6 +121,6 @@ public class UserHandlerExceptionResolver implements HandlerExceptionResolver {
 -> WAS입장에서 예외가 발생하지 않고 정상적인 흐름으로 인식   
 
 ----------------------------------------
-__-> 그런데 직접 ExceptionResolver 를 구현하려고 하니 상당히 복잡하다. 지금부터 스프링이 제공하는 ExceptionResolver 들을 사용하면 된다.
+__▶ 그런데 직접 ExceptionResolver 를 구현하려고 하니 상당히 복잡하다. 지금부터 스프링이 제공하는 ExceptionResolver 들을 사용하면 된다.__
 
   
