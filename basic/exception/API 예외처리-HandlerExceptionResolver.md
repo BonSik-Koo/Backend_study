@@ -13,7 +13,7 @@ __API 예외 처리 HandlerExceptionResolver__
 ![image](https://user-images.githubusercontent.com/96917871/160661135-43e19b38-2565-4f02-bfec-2b425a69ea7f.png)
 
 
-_<예1>__
+__<예1>__
 ----------------------------
 __[HandlerExceptionResolver등록]__
 ```
