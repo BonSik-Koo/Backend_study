@@ -128,8 +128,8 @@ public ErrorResult exHandle(Exception e) {
  
  __※ @ControllerAdvice, @RestControllerAdvice__
  ========================================
- - @ExceptionHandler 를 사용해서 예외를 깔끔하게 처리할 수 있게 되었지만, 정상 코드와 예외 처리 코드가 하나의 컨트롤러에 섞여 있다. @ControllerAdvice 또는 @RestControllerAdvice 를 사용하면 둘을 분리할 수 있다.     
- -> 여러개의 각 컨트롤러( 예)주문컨트롤러, 상품컨트롤러 )에 대한 에러처리를 정상코드와 에러처리코드를 분리하여 따로 코드를 보관할수 있게 된다.
+ - @ExceptionHandler 를 사용해서 예외를 깔끔하게 처리할 수 있게 되었지만, 정상 코드와 예외 처리 코드가 하나의 컨트롤러에 섞여 있다. @ControllerAdvice 또는 @RestControllerAdvice 를 사용하면 둘을 분리할 수 있다.      
+-> 여러개의 각 컨트롤러( 예)주문컨트롤러, 상품컨트롤러 )에 대한 에러처리를 정상코드와 에러처리코드를 분리하여 따로 코드를 보관할수 있게 된다.
  
 
 - @ControllerAdvice 는 대상으로 지정한 여러 컨트롤러에 @ExceptionHandler , @InitBinder 기능을 부여해주는 역할을 한다.
