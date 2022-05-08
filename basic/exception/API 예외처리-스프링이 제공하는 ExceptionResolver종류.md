@@ -17,8 +17,6 @@ __(1) Http화면 오류__
 __(2) API 예외 처리__
 - HandlerExceptionResolver 를 떠올려 보면 ModelAndView 를 반환해야 했다. 이것은 API 응답에는 필요하지 않다. 또한 특정 컨트롤러에 서만 발생하는 예외를 별도로 처리하기 어렵다. 예를 들어서 회원을 처리하는 컨트롤러에서 발생하는 RuntimeException 예외와 상품을 관리하는 컨트롤러에서 발생하는 동일한 RuntimeException 예외를 서로 다른 방식으로 처리해야하는 경우가 많다.    
 -> 가장 적합한 방식이 "ExceptionHandlerExceptionResolver"이다.!!!!!!!
-==============================================================
-
 
 
 __1. ResponseStatusExceptionResolver__
@@ -69,8 +67,56 @@ __2. DefaultHandlerExceptionResolver__
 
 __3.ExceptionHandlerExceptionResolver__
 =================================
+- API 예외처리는 대부분 이 기능을 사용한다.!!!!!!!!      
+- 사용법 : @ExceptionHandler 애노테이션을 선언하고, 해당 컨트롤러에서 처리하고 싶은 예외를 지정해주면 된다. 해당 컨트롤러에서 예외가 발생하면 이 메서드가 호출된다. 참고로 지정한 예외 또는 그 예외의 자식 클래스는 모두 잡을 수 있다.     
 
+---------------------------------------------
+__예1) IllegalArgumentException 처리__
+```
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+@ExceptionHandler(IllegalArgumentException.class)
+public ErrorResult illegalExHandle(IllegalArgumentException e) {
+ log.error("[exceptionHandle] ex", e);
+ return new ErrorResult("BAD", e.getMessage());
+}
+```
+__<실행흐름>__
+1) 컨트롤러를 호출한 결과 IllegalArgumentException 예외가 컨트롤러 밖으로 던져진다.
+2) 예외가 발생했으로 스프링의 "ExceptionResolver" 가 작동한다. 가장 우선순위가 높은 "ExceptionHandlerExceptionResolver" 가 실행된다.
+3) ExceptionHandlerExceptionResolver 는 해당 컨트롤러에 IllegalArgumentException 을 처리할수 있는 @ExceptionHandler 가 있는지 확인한다.   
+   -> "@ExceptionHandler"애노테이션이 붙은 메소드중 해당 에러를 처리할수 있는게 있는지 확인!!!!!!.        
+4) illegalExHandle() 를 실행한다. @RestController 이므로 illegalExHandle() 에도@ResponseBody 가 적용된다. 따라서 HTTP 컨버터가 사용되고, 응답이 다음과 같은 JSON으로 반환된다.   
+   -> 여기서 다른점이 앞서 "Default~","Response~"같은 경우에는 response.sendError()를 사용하게 되어 에러를 WAS에서 감지하여 BasicController가 사용되지만 여기에서는 컨트롤러에서 발생한 에러를 "완벽히 처리"하여 에러를 JSON형태로 새로 만들어 그냥 HTTP BODY에 넣어주기 때문에(RestController에 의해) WAS에서는 "에러가 없다고" 인식하여 정상적이게 처리하게 된다.(정상적이니 상태코드를 200으로 설정된다)!!!!!!!!!!
+5) @ResponseStatus(HttpStatus.BAD_REQUEST) 를 지정했으므로 HTTP 상태 코드 400으로 응답한다. -> 상태코드도 지정할수 있다.
+--------------------------------------------------------------------
 
+---------------------------------------
+__예2)UserException 처리 __
+```
+@ExceptionHandler
+public ResponseEntity<ErrorResult> userExHandle(UserException e) {
+ log.error("[exceptionHandle] ex", e);
+ ErrorResult errorResult = new ErrorResult("USER-EX", e.getMessage());
+ return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+}
+```
+- @ExceptionHandler() 에 예외를 지정하지 않으면 해당 메서드 파라미터 예외를 사용한다. 여기서는 UserException 을 사용한다.!!!!!(기본으로)
+- ResponseEntity 를 사용해서 HTTP 메시지 바디에 직접 응답한다. 물론 HTTP 컨버터가 사용된다.
+- 여기선 ResponseEntity를 사용하였기 때문에 생성할때 상태코드를 넣기 때문에 @ResponseStatus를 사용할수 없다.
+-------------------------------------------
+
+----------------------------------------
+__예3) Exception 처리(더 큰범위,상위 부모클래스)__
+```
+@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+@ExceptionHandler
+public ErrorResult exHandle(Exception e) {
+ log.error("[exceptionHandle] ex", e);
+ return new ErrorResult("EX", "내부 오류");
+}
+```
+- 컨트롤러 밖으로 RuntimeException 이 던져지게 된다고 하면 해당 에러를 잡을수 있는 "@ExcptionHandler"가 붙은 메소드를 찾게 되고(ExceptionHandlerExceptionResolver가) 만약 해당 에러가 없거나 해당 에러의 가까운 부모클래스도 없다면 가장 최상의 에러클래스가 Exception이기 때문에 해당 메소드가 실행
+--------------------------------------------------------------
 
 
 
