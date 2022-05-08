@@ -1,10 +1,11 @@
-__API 예외 처리 - 스프링이 제공해주는 ExceptionResolver__
+__<API 예외 처리 - 스프링이 제공해주는 ExceptionResolver>__
+============================================================
 - 스프링이 API예외 처리에 대해서 3가지의 편리한 "ExceptionResolver"의 3가지 종류를 제공해준다.
 ![image](https://user-images.githubusercontent.com/96917871/167300735-e7b9da97-a091-47fd-99b4-56f9f426f2d4.png)
 
 - 대부분 예외처리를 할때에 에러에 대해서 HTML화면오류로 전달하는 방식과 API(HTTP body를 통해서 직접전달) 오류 방식으로 나누어진다.
 
-__(1) Http화면 오류
+__(1) Http화면 오류__
 - HTTP화면 오류로 전달할때에는 "BasicErrorController"를 사용하면 된다.!!! 단순히 오류 상태코드에 맞는 HTML를 보여줄때   
 -> 에러가 WAS로 전달되고 basicErrorController가 HTML을 찾아준다.
 --> 스프링이 제공해주는 API의 처리 종류중 "Response~"방식과 "Default~"방식같은 컨트롤러에서 발생한 에러를 처리(사용자가 원하는 상태코드로 변환 response.sendError()를 통해)를 하여 WAS에 전달되게 되고 결국 WAS에서는 에러를 감지했기 때문에 "BasicErrorController"를 통해서 HTML을 반환하게 된다.!!!!       
@@ -13,7 +14,7 @@ __(1) Http화면 오류
 보여주는 것이 아니라, 예외에 따라서 각각 다른 데이터를 출력해야 할 수도 있다. 그리고 같은 예외라고 해도 어떤 컨트롤러에서 발생했는가에 따라서 다른 예외 응답을 내려주어야 할 수 있다.            
  
 
-__(2) API 예외 처리
+__(2) API 예외 처리__
 - HandlerExceptionResolver 를 떠올려 보면 ModelAndView 를 반환해야 했다. 이것은 API 응답에는 필요하지 않다. 또한 특정 컨트롤러에 서만 발생하는 예외를 별도로 처리하기 어렵다. 예를 들어서 회원을 처리하는 컨트롤러에서 발생하는 RuntimeException 예외와 상품을 관리하는 컨트롤러에서 발생하는 동일한 RuntimeException 예외를 서로 다른 방식으로 처리해야하는 경우가 많다.    
 -> 가장 적합한 방식이 "ExceptionHandlerExceptionResolver"이다.!!!!!!!
 ==============================================================
