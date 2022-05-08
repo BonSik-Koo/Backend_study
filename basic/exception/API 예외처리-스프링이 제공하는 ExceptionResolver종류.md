@@ -4,7 +4,8 @@ __<API 예외 처리 - 스프링이 제공해주는 ExceptionResolver>__
 ![image](https://user-images.githubusercontent.com/96917871/167300735-e7b9da97-a091-47fd-99b4-56f9f426f2d4.png)
 - 컨트롤러에서 에러가 발생할시 스프링에서 자동으로 등록된 위의 3가지 "ExceptionResolver"가 차례로 실행되면서 처리해준다.!!!!!
 
-- 대부분 예외처리를 할때에 에러에 대해서 HTML화면오류로 전달하는 방식과 API(HTTP body를 통해서 직접전달) 오류 방식으로 나누어진다.
+- 대부분 예외처리를 할때에 에러에 대해서 HTML화면오류로 전달하는 방식과 API(HTTP body를 통해서 직접전달) 오류 방식으로 나누어진다.       
+     
 __(1) Http화면 오류__
 - HTTP화면 오류로 전달할때에는 "BasicErrorController"를 사용하면 된다.!!! 단순히 오류 상태코드에 맞는 HTML를 보여줄때   
 -> 에러가 WAS로 전달되고 basicErrorController가 HTML을 찾아준다.
