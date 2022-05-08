@@ -123,6 +123,18 @@ public ErrorResult exHandle(Exception e) {
 --------------------------------------------------------------
 
  ※참고: "@ExceptionHandler"의 반환값으로 String형이 있는데 이것은 MVC패턴과 마찬가지고 뷰랜더링까지 하게된다. 하지만 예외를 API로 전달할때 많이 사용되지 HTML로 전달할때(보통 이때 뷰랜더링하게됨) 사용되지 않기 때문에 참고로 알기
+ 
+ 
+ 
+ __※ @ControllerAdvice, @RestControllerAdvice__
+ ========================================
+ - @ExceptionHandler 를 사용해서 예외를 깔끔하게 처리할 수 있게 되었지만, 정상 코드와 예외 처리 코드가 하나의 컨트롤러에 섞여 있다. @ControllerAdvice 또는 @RestControllerAdvice 를 사용하면 둘을 분리할 수 있다.     
+ -> 여러개의 각 컨트롤러( 예)주문컨트롤러, 상품컨트롤러 )에 대한 에러처리를 정상코드와 에러처리코드를 분리하여 따로 코드를 보관할수 있게 된다.
+ 
+
+- @ControllerAdvice 는 대상으로 지정한 여러 컨트롤러에 @ExceptionHandler , @InitBinder 기능을 부여해주는 역할을 한다.
+- @ControllerAdvice 에 대상을 지정하지 않으면 모든 컨트롤러에 적용된다. (글로벌 적용)
+- @RestControllerAdvice 는 @ControllerAdvice 와 같고, @ResponseBody 가 추가되어 있다. @Controller , @RestController 의 차이와 같다.
 
 
 
