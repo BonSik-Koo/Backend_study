@@ -83,7 +83,7 @@ public ErrorResult illegalExHandle(IllegalArgumentException e) {
  return new ErrorResult("BAD", e.getMessage());
 }
 ```
-__<실행흐름>__
+__<⁎실행흐름⁎>__
 1) 컨트롤러를 호출한 결과 IllegalArgumentException 예외가 컨트롤러 밖으로 던져진다.
 2) 예외가 발생했으로 스프링의 "ExceptionResolver" 가 작동한다. 가장 우선순위가 높은 "ExceptionHandlerExceptionResolver" 가 실행된다.
 3) ExceptionHandlerExceptionResolver 는 해당 컨트롤러에 IllegalArgumentException 을 처리할수 있는 @ExceptionHandler 가 있는지 확인한다.   
