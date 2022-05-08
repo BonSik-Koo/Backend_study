@@ -121,6 +121,7 @@ public ErrorResult exHandle(Exception e) {
 - 컨트롤러 밖으로 RuntimeException 이 던져지게 된다고 하면 해당 에러를 잡을수 있는 "@ExcptionHandler"가 붙은 메소드를 찾게 되고(ExceptionHandlerExceptionResolver가) 만약 해당 에러가 없거나 해당 에러의 가까운 부모클래스도 없다면 가장 최상의 에러클래스가 Exception이기 때문에 해당 메소드가 실행
 --------------------------------------------------------------
 
+ ※참고: "@ExceptionHandler"의 반환값으로 String형이 있는데 이것은 MVC패턴과 마찬가지고 뷰랜더링까지 하게된다. 하지만 예외를 API로 전달할때 많이 사용되지 HTML로 전달할때(보통 이때 뷰랜더링하게됨) 사용되지 않기 때문에 참고로 알기
 
 
 
