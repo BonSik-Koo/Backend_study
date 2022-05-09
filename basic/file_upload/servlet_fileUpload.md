@@ -38,7 +38,7 @@ __-> Parts들은 여러개의 Part가 합쳐져 있는것인데 각각의 "Part"
 __2.servlet를 사용해서 Html form으로 부터 입력받은 문자, 파일 저장해보기_
 ====================================================================
 
-(1) 파일 저장 경로 설정
+(1) 파일 저장 경로 설정                
 ![image](https://user-images.githubusercontent.com/96917871/167455931-827258ea-e5ef-4182-8c80-e153b7f26d64.png)
 
 (2) "multipart/form-data"인 HTML form 에서 전달받은 데이터,파일 출력 및 파일 저장
@@ -97,8 +97,8 @@ __2.servlet를 사용해서 Html form으로 부터 입력받은 문자, 파일 �
  
  |Part 주요 메서드|
  |------------------|
- |part.getSubmittedFileName()|클라이언트가 전달한 파일명, Port의 헤더중 "filename"에 해당하는 부분
- |part.getInputStream()| Part의 전송 데이터를 읽을 수 있다.(Part의 body에 있는 부분)
- |part.write(...)|Part를 통해 전송된 데이터를 저장할 수 있다.(실제 파일 저장!!)
+ |part.getSubmittedFileName()|클라이언트가 전달한 파일명, Port의 헤더중 "filename"에 해당하는 부분|
+ |part.getInputStream()| Part의 전송 데이터를 읽을 수 있다.(Part의 body에 있는 부분)|
+ |part.write(...)|Part를 통해 전송된 데이터를 저장할 수 있다.(실제 파일 저장!!)|
  
     
