@@ -5,6 +5,12 @@ __스프링을 이용한 파일 업로드__
 - "@ModelAttribute" 에서도 MultipartFile 을 동일하게 사용할 수 있다.      
 -> @ModelAttribute의 클래스에 "MultipartFile"를 넣고 정의하면 되는것이다.
 
+ |MultipartFile 주요 메서드|설명|
+ |-----------|-------------------|
+ |file.getOriginalFilename()|업로드 파일명|
+ |file.transferTo(...)|파일 저장|
+
+
 
 
 
