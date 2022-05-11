@@ -32,7 +32,7 @@ public class SpringUploadController {
     public String saveFile(@RequestParam String itemName,
                            /**
                             * 업로드하는 HTML Form의 name에 맞추어 @RequestParam 을 적용하면 된다.
-                            * name해당하는 "Part"를 받아온다.!!! -> 스프링이 제공하는 MultipartFile객체에 담아준다.
+                            * name해당하는 "Part"를 받아온다.!!! -> 스프링이 제공하는 MultipartFile 클래스에 담아준다.
                             * getOriginalFilename()를 사용하게 되면 "Part"의 "filename"을 얻을수 있다
                             */
                            @RequestParam MultipartFile file,
