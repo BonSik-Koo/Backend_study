@@ -171,6 +171,7 @@ public class ItemController {
 - @GetMapping("/attach/{itemId}") : 파일을 다운로드 할 때 실행한다. 예제를 더 단순화 할 수 있지만, 파일 다운로드 시 권한 체크같은 복잡한 상황까지 가정한다 생각하고 이미지 id 를 요청하도록 했다. 파일 다운로드시에는 고객이 업로드한 파일 이름으로 다운로드 하는게 좋다. 이때는 Content-Disposition 해더에 attachment; filename="업로드 파일명" 값을 주면 된다.         
 
 ※ @GetMapping("/images/{filename}"), @GetMapping("/attach/{itemId}") 은 HTML에서 타임리프를 이용하여 href를 사용하여 해당 URL를 호출하게 된다.
+    
 --------------------------------------------------------
     
 __<등록 폼 뷰.html>__
