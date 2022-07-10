@@ -6,4 +6,4 @@
 -------------------------------
 
 * Jpa
-  * [영속성 컨텍스트]()
+  * [영속성 컨텍스트](https://github.com/BonSik-Koo/Spring_study/tree/main/basic/Jpa)
