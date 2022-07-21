@@ -227,7 +227,11 @@
     > 2. 컬렉션은 지연 로딩으로 조회한다.(패치조인하지 말기!)
     > 3. **지연 로딩 성능 최적화를 위해 hibernate.default_batch_fetch_size , @BatchSize 를 적용한다.** , 이 옵션을 사용하면 컬렉션이나, 프록시 객체를 한꺼번에 설정한 size 만큼 IN 쿼리로 조회한다.
     > ![image](https://user-images.githubusercontent.com/96917871/180218800-64395b0f-1714-45be-be5a-a4a4f2d9aac5.png)
-
+  
+   * **결과❗**
+     > * 쿼리 호출수가 "1+N"에서 "1+1"로 최적화 된다.
+     > * 컬렉션 페치 조인은 페이징이 불가능하지만 이 방법은 가능하다.
+       
    <details>
     <summary>@GetMapping("/api/v4/orders")</summary>
     
