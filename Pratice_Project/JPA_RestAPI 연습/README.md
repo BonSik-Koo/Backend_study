@@ -233,7 +233,7 @@
      > * 컬렉션 페치 조인은 페이징이 불가능하지만 이 방법은 가능하다.
        
    <details>
-    <summary>@GetMapping("/api/v4/orders")</summary>
+    <summary>@GetMapping("/api/v3.1/orders")</summary>
     
     ```
     public List<Order> findAllWithMemberDelivery(int offset, int limit) { //페이징!!!
@@ -302,3 +302,158 @@
     </details>
 
 
+* 주문 조회 V4 - JPA에서 DTO로 바로 조회, 컬랙션 N 조회(1+N쿼리) , 페이징 가능
+  * <details>
+    <summary>Dto</summary>
+       
+    ```
+    public class OrderItemQueryDto {
+
+        @JsonIgnore
+        private Long id; //V5에서 직접 map 매핑할때 사용
+
+        private String itemName;
+        private int orderPrice;
+        private int count;
+
+        public OrderItemQueryDto(Long id, String itemName, int orderPrice, int count) {
+         this.id = id;
+         this.itemName = itemName;
+         this.orderPrice = orderPrice;
+         this.count = count;
+        }
+    } 
+    ```
+    ```
+    public class OrderQueryDto {
+
+        private Long orderId;
+        private String name; //주문 고객 이름
+        private LocalDateTime orderDate; //주문 시간
+        private OrderStatus orderStatus;
+        private Address address;
+         private List<OrderItemQueryDto> orderItems;
+
+        public OrderQueryDto(Long orderId, String name, LocalDateTime orderDate, OrderStatus orderStatus, Address address) {
+        this.orderId = orderId;
+        this.name = name;
+        this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
+        this.address = address;
+         }
+    } 
+    ```
+    </details>
+       
+   * Repository
+     > 1. 1:N(컬렉션을 제외한) 관계를 join을 통해 바로 Dto객체로 생성
+     > 2. 1:N 관계인 orderItem을 item과 join을 통해 가져온다.
+     > order가 2개이고(각 다른고객) 각 order마다 orderitem이 2개이기 때문에 "컬렉션 2번 쿼리문 발생
+     *  <details>
+        <summary>repository</summary>
+       
+        ```
+        /**
+        * 컬렉션은 별도로 조회
+        * Query: 루트 1번, 컬렉션 N 번 쿼리문이 실행된다.!!
+        * <단건 조회에서 많이 사용하는 방식></단건>
+        */
+        public List<OrderQueryDto> findOrderQueryDtos() {
+            List<OrderQueryDto> result = findOrders();
+            result.stream()
+                    .forEach(o -> {
+                        List<OrderItemQueryDto> orderItem = findOrderItem(o.getOrderId()); // 루프를 도며 "orderItem"은 여러개니깐 직접 넣어준다.
+                        o.setOrderItems(orderItem);
+                    } );
+            return result;
+        }
+        /**
+        * 1:N 관계인 orderItems 조회
+        */
+        private List<OrderItemQueryDto> findOrderItem(Long orderId) {
+            String sql = "select new jpabook.jpashop.repository.order.query.OrderItemQueryDto(oi.order.id,i.name, oi.orderPrice, oi.count)" +
+                    " from OrderItem oi " +
+                    " join oi.item i" +
+                    " where oi.order.id = :orderId";
+
+          return em.createQuery(sql, OrderItemQueryDto.class)
+                  .setParameter("orderId", orderId)
+                  .getResultList();
+        }
+    
+        /**
+         * 1:N 관계(컬렉션)를 제외한 나머지를 한번에 조회
+        */
+        public List<OrderQueryDto> findOrders() { //1:N 관계인 "OrderItem" 리스트이므로 바로 생성자(OrderQueryDto)에 넣을수 없다.
+             String sql = "select new jpabook.jpashop.repository.order.query.OrderQueryDto(o.id,m.name,o.orderDate,o.status,d.address)" +
+                " from Order o join o.member m join o.delivery d";
+
+             return em.createQuery(sql, OrderQueryDto.class)
+                .getResultList();
+             }
+        ```
+        </details>
+       
+    * Http Reponse body
+      
+      <details>
+      <summary>@GetMapping("/api/v4/orders")</summary>
+          
+      ```
+      {
+        "orders": [
+            {
+            "orderId": 1,
+            "name": "useA",
+            "orderDate": "2022-07-21T19:53:13.231747",
+            "orderStatus": "ORDER",
+            "address": {
+                "city": "서울",
+                "street": "1",
+                "zipcode": "111"
+            },
+            "orderItems": [
+                {
+                    "itemName": "JPA1 BOOK",
+                    "orderPrice": 10000,
+                    "count": 1
+                },
+                {
+                    "itemName": "JPA2 BOOK",
+                    "orderPrice": 20000,
+                    "count": 2
+                }
+            ]
+          },
+         {
+            "orderId": 2,
+            "name": "userB",
+            "orderDate": "2022-07-21T19:53:13.309542",
+            "orderStatus": "ORDER",
+            "address": {
+                "city": "진주",
+                "street": "2",
+                "zipcode": "2222"
+            },
+            "orderItems": [
+                {
+                    "itemName": "SPRING1 BOOK",
+                    "orderPrice": 20000,
+                    "count": 3
+                },
+                {
+                    "itemName": "SPRING2 BOOK",
+                    "orderPrice": 40000,
+                    "count": 4
+                }
+            ]
+         }
+         ],
+         "count": 2
+         }
+      ```
+      </details>
+       
+
+       
+       
