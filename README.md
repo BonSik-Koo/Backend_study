@@ -16,3 +16,5 @@
   * [프록시/즉시로딩,지연로딩](https://github.com/BonSik-Koo/Spring_study/blob/main/basic/Jpa/%ED%94%84%EB%A1%9D%EC%8B%9C%EC%99%80%20%EC%A6%89%EC%8B%9C%EB%A1%9C%EB%94%A9%2C%EC%A7%80%EC%97%B0%EB%A1%9C%EB%94%A9.md)
   
   * [연관관계 매핑](https://github.com/BonSik-Koo/Spring_study/blob/main/basic/Jpa/%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84%20%EB%A7%A4%ED%95%91.md)
+
+  * [RestAPI pratice](https://github.com/BonSik-Koo/backend_study/tree/main/Pratice_Project/JPA_RestAPI%20%EC%97%B0%EC%8A%B5)
