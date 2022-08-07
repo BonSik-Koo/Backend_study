@@ -7,7 +7,7 @@
   * [Session](https://github.com/BonSik-Koo/backend_study/blob/main/basic/Cookie_Session/Session.md)
   
   * [Filter](https://github.com/BonSik-Koo/backend_study/blob/main/basic/Filter_Interceptor/Filter.md)
-  * [Interceptor](https://github.com/BonSik-Koo/Spring_study/blob/main/basic/Filter_Interceptor/Interceptor.md)
+  * [Interceptor](https://github.com/BonSik-Koo/backend_study/blob/main/basic/Filter_Interceptor/Interceptor.md)
   
 
 * Jpa
