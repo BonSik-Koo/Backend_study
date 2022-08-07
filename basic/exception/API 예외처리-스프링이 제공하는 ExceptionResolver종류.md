@@ -48,7 +48,6 @@ public class BadRequestException extends RuntimeException {
 -> "error.bad"에 맞는 코드를 "messages.properties"에서 찾아서 매핑 해주는 기능
 -------------------------------
 
-----------------------------
 __예2) "ResponseStatusException" 사용__
 ```
 @GetMapping("/api/response-status-ex2")
@@ -56,20 +55,24 @@ public String responseStatusEx2() {
  throw new ResponseStatusException(HttpStatus.NOT_FOUND, "error.bad", new IllegalArgumentException());
 }
 ```
+
 - @ResponseStatus 는 개발자가 직접 변경할 수 없는 예외에는 적용할 수 없다. (애노테이션을 직접 넣어야 하는데, 내가 코드를 수정할 수 없는 라이브러리의 예외 코드 같은 곳에는 적용할 수 없다.) 추가로 애노테이션을 사용하기 때문에 조건에 따라 동적으로 변경하는 것도 어렵다. 이때는 ResponseStatusException 예외를 사용하면 된다.    
 --------------------------------------------------------
 
 
 __2. DefaultHandlerExceptionResolver__
 ========================================
+
 - "DefaultHandlerExceptionResolver" 는 스프링 내부에서 발생하는 스프링 예외를 해결한다. 대표적으로 "파라미터 바인딩(쿼리파라미터로 일치하지 않은 타입의 변수 입력했을경우)시점"에서 타입이 맞지 않는 경우가 있다. "ModelAttribute"등       
 -> 이런경우 __"TypeMismatchException"__ 을 발생시키는데 "BindingResult"와 같이 처리를 해주지 않으면 서블릿 컨테이너까지 오류가 올라가게 되고, 결과적으로 서블릿까지 전달되어 500오류가 발생하게 된다.    
 --> 하지만 실제로는 500오류가 발생하지 않는데 그 이유는 바인딩 오류같은 스프링 내부에서 오류(TypeMismatchException 뿐만아니라 여러  종류가 존재!!) 가 발생하게 되면 "DefaultHandlerExceptionResolver"가 처리해주고 Http 상태코드를 400으로 바꾸어 처리하게 된다.     
 ---> "DefaultHandlerExceptionReslover"도 "response.sendError()"를 통해서 문제를 해결하고 sendError(400) 를 호출했기 때문에 WAS에서 다시 오류 페이지( /error )를 내부 요청한다. 그럼 "BasicErrorController"도 호출되는 것이다.        
 ----> HTTP오류코드를 400으로 바꾸는 이유는 스프링 내부에서 발생하는 예외들은 대부분 클라이언트가 HTTP요청정보를 잘못입력하였기 때문이기 때문에 400오류로 사용하는 것이다.
 
+
 __3.ExceptionHandlerExceptionResolver__
 =================================
+
 - API 예외처리는 대부분 이 기능을 사용한다.!!!!!!!!      
 - 사용법 : @ExceptionHandler 애노테이션을 선언하고, 해당 컨트롤러에서 처리하고 싶은 예외를 지정해주면 된다. 해당 컨트롤러에서 예외가 발생하면 이 메서드가 호출된다.!!!!!!!!     
 -> 참고로 지정한 예외 또는 그 예외의 자식 클래스는 모두 잡을 수 있다.         
@@ -94,8 +97,9 @@ __<⁎실행흐름⁎>__
 5) @ResponseStatus(HttpStatus.BAD_REQUEST) 를 지정했으므로 HTTP 상태 코드 400으로 응답한다. -> 상태코드도 지정할수 있다.
 --------------------------------------------------------------------
 
----------------------------------------
+
 __예2)UserException 처리 __
+
 ```
 @ExceptionHandler
 public ResponseEntity<ErrorResult> userExHandle(UserException e) {
@@ -109,7 +113,7 @@ public ResponseEntity<ErrorResult> userExHandle(UserException e) {
 - 여기선 ResponseEntity를 사용하였기 때문에 생성할때 상태코드를 넣기 때문에 @ResponseStatus를 사용할수 없다.
 -------------------------------------------
 
-----------------------------------------
+
 __예3) Exception 처리(더 큰범위,상위 부모클래스)__
 ```
 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
