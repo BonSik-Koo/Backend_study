@@ -22,3 +22,4 @@
 
 ---------------------------------------
   * [RestAPI pratice](https://github.com/BonSik-Koo/backend_study/tree/main/Pratice_Project/JPA_RestAPI%20%EC%97%B0%EC%8A%B5)
+  * [기타 기능연습 프로젝트](https://github.com/BonSik-Koo/backend_study/tree/main/Pratice_Project)
