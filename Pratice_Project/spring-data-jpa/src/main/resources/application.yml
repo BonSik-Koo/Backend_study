@@ -1,0 +1,27 @@
+---
+server:
+  port: 8880
+
+---
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/spring_data_jpa?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: 1234
+
+---
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        # show_sql: true #JPA 가 실행하는 쿼리를 콘솔에 찍음
+        format_sql: true # 쿼리가 포맷팀 되서
+
+---
+logging.level:
+  org.hibernate.SQL: debug  #JPA 가 실행하는 쿼리를 로그파일에 찍음
+  # org.hibernate.type: trace #쿼리가 나갈때 파라미터까지 볼수있는 옵션 -> 근데 가독성이 떨어짐
+
