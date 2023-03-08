@@ -1,5 +1,5 @@
 
-📌 Spring, Spring boot
+📌 Spring 관련 이론 정리
 -------------------------------
 * Spring
   * [Spring Basic](https://github.com/BonSik-Koo/Backend_study/tree/main/basic)
@@ -21,5 +21,6 @@
 
 
 ---------------------------------------
+📌 Spring 이론 기반 
   * [RestAPI pratice](https://github.com/BonSik-Koo/backend_study/tree/main/Pratice_Project/JPA_RestAPI%20%EC%97%B0%EC%8A%B5)
   * [기타 기능연습 프로젝트](https://github.com/BonSik-Koo/backend_study/tree/main/Pratice_Project)
