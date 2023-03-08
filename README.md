@@ -20,7 +20,7 @@
   * [연관관계 매핑](https://github.com/BonSik-Koo/backend_study/blob/main/basic/Jpa/%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84%20%EB%A7%A4%ED%95%91.md)
 
 
-📌 Spring 이론 기반 
+📌 Spring 관련 이론 기반 연습  
 ---------------------------------------
   * [RestAPI pratice](https://github.com/BonSik-Koo/backend_study/tree/main/Pratice_Project/JPA_RestAPI%20%EC%97%B0%EC%8A%B5)
   * [Spring Data JPA](https://github.com/BonSik-Koo/Backend_study/tree/main/Pratice_Project/spring-data-jpa)
