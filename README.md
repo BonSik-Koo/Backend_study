@@ -1,27 +1,12 @@
+# 📚학습 기록 목차
 
-📌 Spring 관련 이론 정리
--------------------------------
-* Spring
-  * [Spring Basic](https://github.com/BonSik-Koo/Backend_study/tree/main/basic)
-  * [Cookie](https://github.com/BonSik-Koo/backend_study/blob/main/basic/Cookie_Session/Cookie.md)
-  * [Session](https://github.com/BonSik-Koo/backend_study/blob/main/basic/Cookie_Session/Session.md)
-  
-  * [Filter](https://github.com/BonSik-Koo/backend_study/blob/main/basic/Filter_Interceptor/Filter.md)
-  * [Interceptor](https://github.com/BonSik-Koo/backend_study/blob/main/basic/Filter_Interceptor/Interceptor.md)
-  
-  * [Validation](https://github.com/BonSik-Koo/backend_study/tree/main/basic/Validation)
-  * [Exception](https://github.com/BonSik-Koo/backend_study/tree/main/basic/exception)
-
-* JPA
-  * [영속성 컨텍스트](https://github.com/BonSik-Koo/backend_study/blob/main/basic/Jpa/%EC%98%81%EC%86%8D%EC%84%B1%20%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8.md)
-  
-  * [프록시/즉시로딩,지연로딩](https://github.com/BonSik-Koo/backend_study/blob/main/basic/Jpa/%ED%94%84%EB%A1%9D%EC%8B%9C%EC%99%80%20%EC%A6%89%EC%8B%9C%EB%A1%9C%EB%94%A9%2C%EC%A7%80%EC%97%B0%EB%A1%9C%EB%94%A9.md)
-  
-  * [연관관계 매핑](https://github.com/BonSik-Koo/backend_study/blob/main/basic/Jpa/%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84%20%EB%A7%A4%ED%95%91.md)
-
-
-📌 Spring 관련 이론 기반 연습 프로젝트
----------------------------------------
-  * [RestAPI pratice](https://github.com/BonSik-Koo/backend_study/tree/main/Pratice_Project/JPA_RestAPI%20%EC%97%B0%EC%8A%B5)
-  * [Spring Data JPA](https://github.com/BonSik-Koo/Backend_study/tree/main/Pratice_Project/spring-data-jpa)
-  * [기타 연습 프로젝트](https://github.com/BonSik-Koo/backend_study/tree/main/Pratice_Project)
+|제목| 학습 기록물| 소스 코드|
+|----|-----------|----------------|
+|[스프링 핵심 원리-기본편](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%95%B5%EC%8B%AC-%EC%9B%90%EB%A6%AC-%EA%B8%B0%EB%B3%B8%ED%8E%B8)|-[컴포넌트 스캔](https://github.com/BonSik-Koo/Backend_study/blob/main/basic/componentscan_relationship.md) <br> -[스프링빈과 의존관계1](https://github.com/BonSik-Koo/Backend_study/blob/main/basic/springbin_relationship1.md) <br> -[스프링빈과 의존관계2](https://github.com/BonSik-Koo/Backend_study/blob/main/basic/springbin_relationship2.md) <br> -[빈 스코프](https://github.com/BonSik-Koo/Backend_study/blob/main/basic/Scope.md)||
+|[스프링 MVC 1편-백엔드 웹 개발 핵심 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-1)||[소스 코드](https://github.com/BonSik-Koo/Backend_study/tree/main/Pratice_Project/Spring_Http_Request_Response)|
+|[스프링 MVC 2편-백엔드 웹 개발 핵심 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-2)|-[타임리프](https://github.com/BonSik-Koo/Backend_study/tree/main/basic/thymeleaf) <br> -[Validation](https://github.com/BonSik-Koo/Backend_study/tree/main/basic/Validation) <br> -[쿠키,세션](https://github.com/BonSik-Koo/Backend_study/tree/main/basic/Cookie_Session) <br> -[필터,인터셉터](https://github.com/BonSik-Koo/Backend_study/tree/main/basic/Filter_Interceptor) <br> -[예외처리](https://github.com/BonSik-Koo/Backend_study/tree/main/basic/exception) <br> -[파일 업로드](https://github.com/BonSik-Koo/Backend_study/tree/main/basic/file_upload)|[소스 코드](https://github.com/BonSik-Koo/Backend_study/tree/main/Pratice_Project/Item_Service_Project_Update)|
+|[스프링 DB 1편-데이터 접근 핵심 원리](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-db-1)|-[커넥션 풀과 데이터소스-블로그](https://bonsik.tistory.com/3) <br> -[트랜잭션 이해와 락-블로그](https://bonsik.tistory.com/4) <br> -[스프링 트랜잭션 AOP 등장까지의 변천사-블로그](https://bonsik.tistory.com/5) <br> -[스프링의 예외누수 문제해결 변천사-블로그](https://bonsik.tistory.com/8)||
+|[자바 ORM 표준 JPA 프로그래밍-기본편](https://www.inflearn.com/course/ORM-JPA-Basic)|-[영속성 컨텍스트](https://github.com/BonSik-Koo/Backend_study/blob/main/basic/Jpa/%EC%98%81%EC%86%8D%EC%84%B1%20%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8.md) <br> -[변경감지와 병합](https://github.com/BonSik-Koo/Backend_study/blob/main/basic/Jpa/%EB%B3%80%EA%B2%BD%EA%B0%90%EC%A7%80%EC%99%80%20%EB%B3%91%ED%95%A9(merge).md) <br> -[연관관계 매핑](https://github.com/BonSik-Koo/Backend_study/tree/main/basic/Jpa) <br> -[프록시와 즉시로딩,지연로딩](https://github.com/BonSik-Koo/Backend_study/blob/main/basic/Jpa/%ED%94%84%EB%A1%9D%EC%8B%9C%EC%99%80%20%EC%A6%89%EC%8B%9C%EB%A1%9C%EB%94%A9%2C%EC%A7%80%EC%97%B0%EB%A1%9C%EB%94%A9.md) <br> -[패치 조인](https://github.com/BonSik-Koo/Backend_study/blob/main/basic/Jpa/%ED%8E%98%EC%B9%98%20%EC%A1%B0%EC%9D%B8.md)||
+|[실전! 스프링 부트와 JPA 활용1-웹어플리케이션 개발](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8-JPA-%ED%99%9C%EC%9A%A9-1)||[소스 코드](https://github.com/BonSik-Koo/Backend_study/tree/main/Pratice_Project/JPA_SimpleShop)|
+|[실전! 스프링 부트와 JPA 활용2-API 개발과 성능 최적화](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8-JPA-API%EA%B0%9C%EB%B0%9C-%EC%84%B1%EB%8A%A5%EC%B5%9C%EC%A0%81%ED%99%94)||[소스 코드](https://github.com/BonSik-Koo/Backend_study/tree/main/Pratice_Project/JPA_RestAPI%20%EC%97%B0%EC%8A%B5)|
+|[실전! 스프링 데이터 JPA](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-JPA-%EC%8B%A4%EC%A0%84)|-[스프링 데이터 JPA란?-블로그](https://velog.io/@rnqhstlr2297/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-JPA) <br> -[스프링 데이터 JPA 공통 인터페이스-블로그](https://velog.io/@rnqhstlr2297/%EA%B3%B5%ED%86%B5-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4) <br> -[스프링 데이터 JPA 쿼리 메소드-블로그](https://velog.io/@rnqhstlr2297/%EC%BF%BC%EB%A6%AC-%EB%A9%94%EC%86%8C%EB%93%9C-%EA%B8%B0%EB%8A%A5) <br> -[스프링 데이터 JPA 페이징과 정렬-블로그](https://velog.io/@rnqhstlr2297/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%8E%98%EC%9D%B4%EC%A7%95%EA%B3%BC-%EC%A0%95%EB%A0%AC) <br> -[스프링 데이터 JPA 벌크연산과 EntityGrapth-블로그](https://velog.io/@rnqhstlr2297/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-JPA-%EB%B2%8C%ED%81%AC%EC%97%B0%EC%82%B0%EA%B3%BC-EntityGrapth) <br> -[스프링 데이터 JPA 확장기능-블로그](https://velog.io/@rnqhstlr2297/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-JPA-%ED%99%95%EC%9E%A5%EA%B8%B0%EB%8A%A5) <br> -[스프링 데이터 JPA 분석-블로그](https://velog.io/@rnqhstlr2297/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-JPA-%EB%B6%84%EC%84%9D) <br> -[스프링 데이터 JPA Projections과 Native Query](https://velog.io/@rnqhstlr2297/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-JPA-Projections-%EB%B0%8F-Native-Query)|[소스 코드](https://github.com/BonSik-Koo/Backend_study/tree/main/Pratice_Project/spring-data-jpa)|
