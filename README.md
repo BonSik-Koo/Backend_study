@@ -1,6 +1,6 @@
 # 📚학습 기록 목차
 
-|제목| 학습 기록물| 소스 코드|
+|제목|학습 기록물|소스 코드|
 |----|-----------|----------------|
 |[스프링 핵심 원리-기본편](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%95%B5%EC%8B%AC-%EC%9B%90%EB%A6%AC-%EA%B8%B0%EB%B3%B8%ED%8E%B8)|-[컴포넌트 스캔](https://github.com/BonSik-Koo/Backend_study/blob/main/basic/componentscan_relationship.md) <br> -[스프링빈과 의존관계1](https://github.com/BonSik-Koo/Backend_study/blob/main/basic/springbin_relationship1.md) <br> -[스프링빈과 의존관계2](https://github.com/BonSik-Koo/Backend_study/blob/main/basic/springbin_relationship2.md) <br> -[빈 스코프](https://github.com/BonSik-Koo/Backend_study/blob/main/basic/Scope.md)||
 |[스프링 MVC 1편-백엔드 웹 개발 핵심 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-1)||[소스 코드](https://github.com/BonSik-Koo/Backend_study/tree/main/Pratice_Project/Spring_Http_Request_Response)|
