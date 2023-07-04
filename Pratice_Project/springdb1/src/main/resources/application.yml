@@ -1,0 +1,32 @@
+server:
+  port: 8888
+
+---
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jdbc?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+---
+logging:
+  level:
+    org:
+      hibernate:
+        engine:
+          transaction:
+            internal:
+              TransactionImpl: DEBUG
+
+      springframework:
+        transaction: DEBUG
+
